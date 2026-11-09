@@ -63,6 +63,21 @@ input[type=text]{width:100%;padding:8px;border:1px solid #94a3b8;border-radius:6
 select:disabled,input:disabled{opacity:.5}
 @media print{nav,.hbtns,.ctl,.row,#file,.btn{display:none!important}body.po section{display:none}body.po section.only{display:block}body.pa #conceptos{display:none}body{background:#fff}.card{box-shadow:none;break-inside:auto}header{padding:12px}.logo{box-shadow:none;border:1px solid var(--b)}}
 footer{text-align:center;color:var(--m);font-size:.82rem;margin-top:10px}
+
+.appraisal-summary{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%);color:#fff;border-radius:14px;padding:24px;box-shadow:0 10px 25px rgba(15,23,42,.2);margin-top:18px}
+.appraisal-summary h3{color:#fff;font-size:1.2rem;font-weight:800;margin:0 0 14px 0;display:flex;align-items:center;gap:8px}
+.appraisal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.appraisal-card{background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:14px}
+.appraisal-label{font-size:.72rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.appraisal-value{font-size:1.25rem;font-weight:800;color:#fff;font-family:Consolas,monospace}
+.appraisal-range{font-size:.74rem;color:#38bdf8;margin-top:4px}
+.ctl.c6{grid-template-columns:repeat(3,1fr)}
+@media(max-width:800px){.ctl.c6{grid-template-columns:1fr}}
+
+.p-lg{display:inline-flex;align-items:center;vertical-align:middle}
+.p-lg::before,.p-lg::after{font-size:2.1em;font-weight:300;line-height:1;font-family:Cambria,'Times New Roman',serif;margin:0 1px}
+.p-lg::before{content:"("}
+.p-lg::after{content:")"}
 </style>
 </head>
 <body>
@@ -73,12 +88,13 @@ footer{text-align:center;color:var(--m);font-size:.82rem;margin-top:10px}
     <div class="sub">Análisis estadístico de muestras del mercado inmobiliario</div>
     <div class="hbtns">
       <a class="hb hb-pp" href="https://paypal.me/spilimcurso" target="_blank" rel="noopener noreferrer">Donar con PayPal</a>
+      <button type="button" class="hb hb-rs" id="reset-top">Reiniciar todo</button>
     </div></div>
   <div class="logo hr"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIcAAAB2CAYAAADiKYC2AAA4PUlEQVR42u19eZgVxfX2e6p6vfvsDAwMIOuAooCKKI7AAAMoijruica4ROOWqDHJ90smRLOYRI0mURCDCqIwCBoFREQNMRhNgmvcFUXBkW22u3d31fn+mAHBiGJABZ33eS7c6dtVXXX6rVPbqXOATnRiJ6Cvdd3rGgTWNAv0fp+QLGyXRbSJUdCV8dr7jJXQwDTdSY6vKkZc5zqF8VJfx/sw/Eoivwe02UMJo5hYhQlwwcIAQYKZAChABADyGjItKWgRyntPaF7LlngPkt70kq+vw19/lgYRd5JjX8LkmwtkED6E2DgI0hrKzEM0ZBlIx8h0iKQDaAHNPqA8AACDAdbt0iABYmr/LgwAol1IOgBpDxoqRVo1sxD/EZx7BoznTR08lVt+9joA3EmOvQzOsbO6qyAyOlDBBECMYpIVwogSCQJUBhx4mgQ2QOk1xP56JYxGIrlFqGCzIcw2La28x74PTdoyLEsEvql0NkqGVcSki1h7ZWCjQrOoJMEVGpYFM9LOBZUDtL8FrJ+SnF8ewHgUD7/2ylehO9pnyRGffHNBxo+NZ2HVMatqmJFiljagUiCVbxYcPAfCc5LVM0JnXxRWbH1R8vXU2pXTcv/TA4fNMNElErF0ukT51gCD7aFa0EEsjGEsjG7adEBgkJ9JEtS/AV5oUHJxbuk5azvJ8QXBqpk5kEXoNGWYp4Hs3iQigG4DdOZNCPGoEPnHZD79j0FbjA9Wrz7f/7zLE6meUezb+iAtYjWaxWiWYhjMuIDWoKBlE8h60OTcrNxDZ6zqJMfnhfG3DLFE/CINcaKy4glAQQSpDSYFS7XOL3JUy5Ntyy9v+lLLeHR9yKVuB8CLHeeTPE4ZZn8SNsjLegx/GTH/QT18yopOcuwpTTF+xgCFwsu05NPIjEVJZQGVWy1FbrYIttyXW37Fe3tttxdExzHJsxmyhu24ZD8TkA4WWzJ/fW7JN57oJMf/iPC435bm0OO7LOQFsN0S0h4Mz3vCR/pPmrcsxiNXpvfEcyqBxGYyf5iBGYXBrW6ooCHT+v5z9dXVxoI3Xz3y5Q1b8rDtN5FOb/hf8q+rq5MPJmuOCDh6gZLyeDYjpvDyeaJgnvTWX+ut+N4rneT4TNri9hOUjE7ThjvI0D6gU0+Dguu7ph9/YO3KOz/TgLJLNDSp2eOLEKiYcgvnBKnGW4EP1yf6Ab3WCvd5X5jXhc38AIXCwxx3yAHDzGXquSb7jc0K79uCbWElnigsPPLydevuzQIodl3Xzmaz6z/TrGryrFFKG9/T5ExlmQC8lo0G8r/zSj64GXftGbLvSYi9ako6alZ3Y9z8O5URboAVHmT56bVCb7q4MGgc6y89q+HTiFFQUHCElNYJQEUhABw7JN4TjHuEUfgIsTdDBTwVZeND26dhGwRhNutwrxsrwnRz4HuJJt8312+AnVSmYqPraQNL7fM44DPXtW3qBgBV3Qqv9j292rBDDxhW9NIePYb33pX65Zac/YT/0DdPtLh5Kqnmf5EdKfWtgt+Ipl6LjXGzD+0kx07gjr/9BD8aeVy7Bd9kBqS/8TZXbKzOP3TuHzd8Shdy48W1ds+i2A3pTP5mQ+qf2nbyvrKyM8KJhJUzDSS9IDXUgynZz/0GG5ZndniuZRmkc3G0vbbgzWb/l+SGbkKysOWEM8eODodkKenNP9uUxfdhmo3gguYZ5w0zm5P+FCva9UabcndbpI5K55OVAFDkFnWNRMqLP6WqOvvQ+fer9KYxZv6DH0s/1wwzehQb0eXG+NlXoa7eQifaUT6sPmTXzPmlmLTQk1OWslk77w13wszjP7W76NKlBBhmAsCkQZGB3Qrj+XDX6prThxaXl0QLm83Y/qcBQL/yogGulFebhlhsmu7bTrjfGdvnM7TcHGqLWCNQNgiRyLYXO7Zn4U+6FHdvHNKv302JSJGP4gHDAOCbowaNjztuQBSaHkn0GrVNAzFTt3jsb0Sld3yW+psTZg01auc+Kqf8hcXkB9iYcM8id8wt3b72miNU/Zsumwp6z/Oc+I9YGKaV3zi/JL1uTPbhcxfttOsIm4Ncad26ZePmpy333YcikSNKRg7br00aZird9kFi7jObGyMit8zUTScDQDKZOtKwCrZ0LSg6JyJoYz6TG7h9fhmY0GT7wEHvIZXavPX6v95pjTS1BX+77LDyH4jA3+LKsASAJ198+7Csks84FrUpPz+xYz8GR/YvHp3MpUeRqfuPGHFioWOJ75t22bQ+fS62P0kG/sNnP1NivH6MkWm5Rmg/p+34VM8qXGaMueWQr63GMCdO319MbPg3HbOU5cR5mdC4u36A6mrjk9KM6ROpKnKsJqKC2d0Ko4cWhArWiNCAcwGgT0l0UTjc7X4AOHpozytCTul6gGl4ry4nxNzQW5Y0VttmZKlVeGDV9nlWVFS4llVYBdTJ7a8nnMgo2+5RAwCH9Ok23wr1vJK5XgzpVrSGKLwMCJVvf3+/kviDoUjxv6PRgjWxaPw/pjTZjPRaMmzYeSYAqqrCp3YX7oRZx4pJ898TxzzEorbhA2v8bcd97YhhjJ8xUtQ2vCWOXcZy4oJ1obG3Hr0r6ZZe3MfulQj93QqX3l4Uc06LOtHmUPHwiQAwqn/5hLAVajVN+/rCWOzVUKTi+q3pevcuK7Vtu89HCfBZuAwgDECU2eKiiG0usQ1rtRspehgFveNThxYPLYgUpMKFg8eFTOPeosLE/Gg4kbLjQ0YDwAEDyk6JRLosKyqaEv3UB42+fpCcePcqccxipgkN6VDNzG99bYhhT7q9Vkxc1EhTlrGsvetFc/SNw3Z27+G9y3tEHWOm6UaejEYHjACAo/aLTUg4DptmbEUkZP/TtBOL7XiP3gBQURqZ6pjOLaYZOguA/XnWoyQW26+0vGLqid/7nju8V8ktoXDFE0CDrKurk/2L43+0Q11WobreqKtBvDgaecsO9boBYEJVlVVQUBD/pLzLDqsvNWrvvp+OXsZi4iLPqr3zsq88MUIT75ooJy3aYhzzIFu181bFx93Ua2f3Di51p8Zc5xXTCU1PhO17XbfnQwDADZDlBaGVptNj+pSRiEZDoQXSKpoFwPiy6jXmwKqq7t0PHgQApx7arW9JtDAtI/vXAUDf4vCvXLfk7XiPyQUAUBoN/8q0uy5A3adosaMfCDm1d84SxzzANOk+ZYyffcVXlhjhmtvHyokLN4spS9iaeNdfCz9lRH5AReynYSeaKqg4YHBFwpru2LGkEyu/CtXVxvDK0MR4tCgZ7TW2H+ohioqKov+LEguHw2W2bfcG0B/AgI5Pf9u2+7iu27WjK/lMGFYZPqqkqLQBFSe61VVdDyyMJDJmbNDJAHBgr3hd1E1k3MjAYwHAtkv6AJXOzvKqqqq3zIl33iwm3880aVFgTZxz6Vdv8Dlm+lBZu/BdecxStifM+XvxhOvLP+6+gytLuiTc6BQAqD+z2ulZGF1hGs4Wy43P7VHqnJ4IJ7KwB459vL7a6NO9+3jEhyR2sQgRwDxQCPNsIvoDES0H8AwRvU1EmwG0Akh2fNqIaAuReBfACwD+RkSzAFxiGMZhAIp3td79yooWOW7JEqBO1gzqMrA0Gm2yIj1/CgBDyiOHh6zEeiPW7+BPZtsMU064a4Y4ZjGLiQvyzpg/n/GVIYYz+o+VxoR7XhJTlrIx8c7VBTW/7rHTMUZldERpOJyC2/07ADB1eMXgkmg8bYR7XTS4LHZSQaRos1m8/7BdXTmXUh5PJGcRyReEMHJCGEwkGAAT0dZPnoiaiWgjEW1oJwZltv6OdusuBsBCCBZCvCGEuNc0zfM6tM5OUVkSP7Br167dAeCIyuIHLLd8BepZHN2vvLgoHHpdhrvPwrD2tRrumBJ/LKrrHWPC7DnimIfYGL+o1Z4wt+aLeHef797KyNuiIuLcy27xeOG1vSP0xqP9hy966ZOSHFgZu2DNBrouLYpOUJk1Dw3tVXTBqxszf1KBeI1l6ZVe5u3Fn5BcGoYxUil1CoBJRNSTGSACAGoF+C0ieoWIXtRavy2EaCSiFBGlichvf0dsMrPLzGEhRKnWuhLAYK31QGbuA6ALEYGZAWAzgJVCiLvi8fhjTU1NbTsfXCceebrR3lhqZC7RpGY1BdFuXvfJo/HarGR5YejbLdl4dbbo8PPRvnfzMbK8NkqJsoVklo6jXHKN9JKTvMfPeW1fVRokx931Bzl5GctJ9zRHamZU72rCQV3Cv444sRbE9xv2eH21URKLXQC7rOcnzY6llMcQ0XIpZUBEW1v5WsMw7hBCnG5Z1sDdnMGQ4ziVUsrJpmn+Xgjx4lbN0vGsZw3DuADAx85ERvctGVIaDa82Dfmq7cReN8sOGAwA+xVEzo0Y0hd26Suoa/jktZDaGyvkhIbnacpSpvHznohX35DYN7uTsbPONCYuDMTR96lIzR3nfPwSeKIyXlb5Xy+duUH2LQnNC7mFL8b3bx/l71RVSDmOiJZt101khBCLhRCnhEKhLp9jFaNSyvFSyj8LITZtJSQRPSuEOPPjiHhgn0iJbcsahIrLAaBvYfiSsBNrLU0UvBqKdr8Ptt1b2qHxiFUV7nShbPLMQ4yJDZvEMUvYrJn7x31vADp2+v5ywr0bxJSlbNbO+UP9Tpbp+5bFp7lu7F0kBg3Z4Yd4vKC6Mp4oLSqdAlR9bGtyHKcHEc0E4He03qSU8s+GYXzhu5u2bfeRUl4thFgvhNiqTZYbhjFiZ2kGVsR/4DqRjBOrPK17UXSRYYTeMwz5gTCi7BQMOuUTlwTGzTxTTFqkaPJffHP87NP3HWaM+J4rxjesoClLWU6a93S8+vadqr7qyniiMhFpcKx4I9yqQwCgrCB8ihMqXhGvrN5ZOhJCnCGEeKdDnSsiajAMY/iXvsBn2z2J6LdCiLYOLdYqhKj/uClxj8LExU649LSOOg8ui9pXO04oL2Pdrq2oGOF+8pPqhTFx/gwcu5ipdv679hFze+8T3LDG3XmlnLSY5aQFLUbtrSM+7f7rTqxw+xSH73Ts8PsFkdgP45HCd61I5dSdDJYTRHTLdmOKFy3Lmoq9zGjJMIyDATy0dVYkhPEIYPXfqRbpEp0Yd+xGcsuuQX39Lm2GRmpvLBGT7n4BU5ayHH93w25sDXwxiFTPGCAmLtwojnmQrdrZ9buarqG+yqoscm6yzHDGjPXemUrdj4geJyKWUiop5S0AuuzF4rCFEFcQUSuRYCHk2wCO+i/t2S8yoCRqfSCsWP1nfsCk22vFpHvzYuL9gVkz56S9enZiTLhjrpjyIMuJ8/9ZNOW2z7Rqed55w8zS0tL9d9ISDxVCvNKhLTabprnPbEYZhnGEEOKFjm6mSQjxjR3WuIaVh0oKoiP/R+1HVu3d0+WUJSwnzHspOvbOor2zmYy+YzxNWpSXkxd6ofF31+7BrI8E8H6HcF8BcPg+OHnrvnVGJUjkDWFcuKcyTky6rVJOXLiOpjzAxvg5/29PFnrPGPtU1zuBaf0fGa5lqOSiTPy+R/bUMhqAeQDKATzLzMcCWLUPkuM9Zj4ZwD0Mtpj19aawz9sTGbcsPWetIzK/E5qghHURJt/ce68ih+n0marsyOEUpJKuzv4KCxao3c7TNIcQ0TwA5US0mpmPB/A69l20MvO5zDxbg23Fwe9NYZ62RyYB+cztpHLPw4p1kUHs4r2GHJXVtzsg82JJQpAI5rUsv+D53c0zFAqVK6VuB9BdCPEfZj4JwDvY95EG8F0ACxjaVVA3dWzm7RaaV5zfKin4PZAHkXFGrHb6fnsFORodc4KmyCFQXptt0k17QhFls9nfM/NBAN6TUp4OYA2+Okgx83eIaCUzF2mtZ7quu9sGxbGwvNdU+WeVFS9OI/7tL50c9agXzOLbbAlpIPeX9H2n/Ge3CyTEZUR0EoCMEOK7vu+/gK8emrTW3wbwNoBBnuddj900Vtq04KSUxbnbCAqajdPCU28u/VLJ8Zsjuw7TQtZQ4Hkh8m/dA0I7lJn/HwAQ0a+UUg/iq4u3mPm7Wuus1vokIcTZu5sh2+l7KUi9DdOpzGdix3+p5PBC4VOUE3dNnV9V7q75526WJSKE+A0RxQEs11pfj68+HiKiG5gZzDzNsqx+uzWgue/CjZbhL4A0wSS+gXbL9y+eHAU1DXFi+1hD+XBlcPfLC6Z5u9mdnMPMRzLzZq31FQAyXwNygJl/TUT/AtBFKfUz7OZWgDDlXBlksizNYW6XsQftTl670s8RUNdBoo0dBV8JHTTXCLOwF/mbG63sOyv69Olj+75PAKCU2lZBpRQ1NgJAI/13vh1TMcvq6vv+95kZRHR7R19c1EFe6vgI13VFNpslAGTbtszn820AmvbS907bGl91NVUDSKVSBAAddYDneRSPx3PPPffcL5h5HjOfIKWcXV5evrJdbo3/JauPIQ99+Kw40ZPXvU9VZ/7TkGXVZtuak0U4vFZr2wCylM2ygM0SeTMJfHiA65Mq8ImQUh7FTD/ijgIwSBAUyOnam9yiSvZSrZRZ/xoECzAJcCAAIT58sUowg5hZ7FiRrVqLASDMzCUdY40NHVZZgpmJiAgAdZjREQhEEMSASYJ+p4Pg6r2TG87hhhH8VEMTIIQABDPJjvrL7WRAgJZa68HMbBHRZiHEhq31305u2/1P2707/lCm1H4LSSfBMhKGzvik0i2AIGZN1O5ewBQkblHKv2q3NYdSqiuA8TuoQgCcWQdk1gHtlk+HYLeXvaDatSyXdpjgdWhdxnYuE1hAQABMENBKOECwlyoOXR4EajxBgBFA73o3U6yU+mQj5u09XG7vv5AVAwDrlIKf8trvpEKg/fo215gEZ1dV36ehL4AJHS9Pd3z4I9+3frDV2EVKqQForbXe7t6Ppt0+T01EOgiC7X9jwNAAdXyHggkN31cWAA/hJuB/c6ryBaA3BCYLbQQawafKDR3mhtvLYut3KaVWSultMui4rgANKA21g3wVYHTcRxrwP07+TQD2Vrl9Tqirk9vbQ9SjXtTVNXy8nUPtjTZqb7Q/pulSdXW9AWxvV1EvdjiEVFcn6zo+W79/9Levgjj3OW+CiTEzD/BDzq0QVqtREDu/9c6J7wBAbOzM2pwT+4mC954KvfnNugXT1LJxM2/IO4UHuiWxS1tnjXsWAEKjrh+qrOhVgekczOwIKeh5y1A3XjH05b9OmzZNxyfe8a2MWXCBKXBb5v5jbwVAoSP/dJ3vFh9smy3nphaf/6o9fk4DG3ZXsGofQ0idl6V0avbf61uNstK7DNdyYyE+c+O80/bp1mnsawXOQpYpHT1UCxt2W34ygD8BII/c8wIjPpK81IbCZKEDIJ2HO0zDHRnIcBEARI+cflgulLhPG4VlFDS/D4WkMuWUvB9UT3+m6CAAb2cCq2fgFBwcqNzjWxtQgNBQJcNHKM7G2oeAfFggIxXsJdcCwhMgXyQtI04pM0U9jsiTHW214+6+rjnEvsdmr4wZ0AjAmr/BzBQbOb23b8qxWuXBkGY63r2kAdBEXqDJhyHMoKqq3lJW9LeBEy8j1XaPlc0MK/R5uEw2n2so/xcbHrzkHQCQzArsQchguyE2+YCCqfLt4ypFgda+ZtecyA8/Mkit1QflFhzznrZsCZBHJDySmjvJ8QVDKdlLCwUZKF/5wYGJUx86kB1xDIQZM4LAI8tMRMu69yeAQWCGALHQjQVduwSmGEleqskUqSszK7/1gbDW8rD80rlD3RemF025MgIAgewYWGu9/eyAmRg+2t2J+UIxcUBCcY2cPOa4yH40sfLMO2ySmxjMAH81XKDvc92KT6JUMGBxcK/HfHI+nb9Am5EhrKx3XGRfzVOkNtXcnAAADZMka0AYrB1VpGASBzKVXX5mY7+jNxc3ouvTzxl1rlIyr7S/BXUNhxrNfjstWGw/vSQwYMJHFoDQkhVMgg5uYjaQJ8qkIgf0lRv/kRbRgBV0Jzm+lAILUajIQlanl5jK7+uZ5rnCiMCycAuSfqCVqvU/2GICAAlmZgloELygRVgMSM+NHHtHLLkumfEKsveTMGMBOecwoxgLSkiP/wBMAlrJra6xNcEnMMEnyQAgEZAPZsrnpglPbTKjjm84sjUXLrQUCQgtGLnsPk+Ofa5b0eQkyLIRHlDeCM9briGhCZqFWujnc80sBAyDIgBAWgAUgCkjor7/ga2DF9kMl+SQmBYuOVTlV3z7ciPIPSzY0IZtr0PdUSy0J0l70JTtW3HidW5i9G8r2QkPYhGwIqQBUEAmETTrsvI/B3/7xs2ZJXUzN1x3YFo73dpXL5kQorDqJMcXinoRkEywCuDKglY/37pQ5AMIpd/rMjixirVqIkWANuPt4wZIwEDgC7nuqcuzItN8pQjS6UAbl7yL1n+ZE+9+MmslGogk2+TXYwEp6bf9zcq0aSKc2piqeC5p91ilnKIukuhNl4wPgDoByUJKCGPz5sfsiXe/ZE1qWO0ce093Q68LBLRULGPNWzY/Kibc+5I1ed6K3mfMLu0kx+eMov6ZsNRtbZzx/pX5YP37aHz+ZQTppVLquWunjc6ZtniZ/eSbtmk7DJCv9dvw/TfDfjYDAG1PXPiw29pSh2zLP3wye7M2hkB7Twl/c136/pMbACC98uK/Ci/9HZHPvcgkemjomJFvezKW977VuuT0ZlRVSfjyDe3rNxUr02MZ1ooikFFhZJNKKeM1qPybgLKYKUKaoo5UYl8kB+1rmiN6sF2QLNiPsfzlFmCaLqlriGxa05zH6vN9VNcbcHsUxO3efutfRregZkY8YiSsHlFqfXnBSR+aFFTVW3ZhvwrYOXQ3U+vfXHZp/qNPKjzkxljKiZZ50tN97Py67e4hHHFzApEiA9mAASACYGKp2bxgwUkaI+YXwEhJSIehchS1DZ084pvNmEZf21hxnehEJzrRiU50ohP7xoB01JxyOJbTVW9se//Ri7d89OeKihFuuEeV8dqTs5IfrUNJVV0YADa9vCC1/Q/9+4+MNslu/NHr7b9Nibb17aIaF9+6c1vV6tsTiBUWFOqc17Tk5P+KrVIHyBXD6iIHRKrSK1dOC7YfOFdVbQp5XqtAIeBvWOetXbtyp+FA3Jo/dM2GK6xytXFj4+LzM53k6EDoyNsOUpZ7lWfbhzPrsIRstvxgRY/u71zx2qyrkgAQH3JDIl8cmcduYYVpJS5MLRr7t63puxx2dWVbtHShZxfZESkuarn/+JUAUDR2xsFZGb9dsW42s5uOT/390k1b00TG3DTKl6W3BFJtUcXvT/poIJzYiOsK06HYj8gMT9HCKZaEPET+pVKz5Yr19314oi985KxfBbGiY1lk5noPnPqLrded4f+vO8X63K1Nt0gLz2IYWRLiMddNTmu799xtNq/m4bcMQcidxqZzSCAcR6jMehfZ6cMz787YkWxfw3UO+7Cbx/iu+0gQjp8sNcUMHWzQUEWAHJxuM7YJJ4jExgd22QSfooP8ILmDf7GcKE4EVDJMU2RwRnvbzp7mpPPtnFswKDDtw8z++29v8k9Zq+Ac3ykcxFbiSCc7cMoOrXjktV3zkbKlOtrjCmXIvoKzmynwtNAYKYQbfDjVra/wLec8T1gDNbvndP3Gom3uD9gotPNG6ADPNPsoiHeIZakySi/xgtJfbiPGqFlDdbh4iXJKj2UmbatcI7E1OC+K//jvxIB6fJLrya86OeL7X1AQuKEbtVVcBJ2e6+rMIUXvLx1utr17iCk3f3PdvZd3bE7UycAVZwGstM76KtATupx9V+XWfFJOKKSgwToHreQxXb/7SFFsxHWFeTKP1n4SwnYkWZFt5CgYfnWFqY0pUqd9oX0gnz39Qx+g9UJFuvw0CBcfSir7H0nBkfu1PTc8ln3h4FjQMvK9hWe9vDUfP9TjeGWHCqVKeRpmz1bPmLCN9AAEa23AX6sfOqPG8NrOEboNnu8f2NDQIFFXJ2EZ17Ad72bqlrttp/ngLi/fMkymWk5i30vn2bqq8IxFX3rkpi9t4y0VP+hwdgsHk8q8FbLMS5MPn7ylfTBx1+vbH4AJHT5isCfCYzTJZ2S25V8cKbww2SqOB3ADAJhGvjRn2JAQLVo45a3vp8fBcRgy3s02cpxnppZ167cd7skWdz85cOIJQ+du9bzMcN8I1RSceu/+AF6IV/eM5WGfpHzPd12+OL3w9L93OPpMAmj8cCxSb3iGdRYb7DuB+nUuyP44nxNn1dU1zF+w4CQFAEwMIra6TLmlqqUttD/YgTTaWk866SRlDf95/yBhHQ4kUxxxrsnMP61xLQCsXblAjL7zZB0qO8HLZmoAPPW11BwsQ8WQIRDr15L3H79lZ/cpK3KqdhO2GePZ4UzLDexlvLxH3+hzcbv9p5XXfUBRCGE0SC/V7Pu4GG70AkZ6oyBeRgEB+TYbaI8Kpdk9A76fsSPWtbakOWSYtu+HzgAApbSpSJuKcrl0vGT1zsoU5orRvhPdX5J8LLXklJ/B91+ElmMet/SQrbpDsAh87VRs9Eue8MLOLzRa11gwf9Oe3ikWRDEBf0uF+cEOdZdeZo1QBE9x2de2WyHV8gEFKbBJgwsn3/Hxp8yr6gt9I3SCVj6C1uwp2cLSmwRr0swHvNfY80gA8E2rAoYEBS3/ZE3LAjJGZmVBtTBCT+abG1eABIThhAAgH684nMgYotg3k03Z6wJtnKIDH17OP/WAMx4OpzTnCNoT5IQSudadOtX1TedUEsLQeb+fO2nuQmGgiyJbprJo90suMqyEFAZTkrRmIU0Yhpye/svURwFAZeUG0roZsEqa09133JQz4wMBgmH6739tyaE2rV0lc6l/MSI9khS6NTT5vmE47OZSc8z0ofEpdx8EAGZp73FkxfrIwMtAycFa8xEMkQVIwuNvAoBJdgFpIPDcZoH0ImIPUjDAamGYc69JFYCZigGQZ1jf9KUBqTnNROMU5ABS2gNE17fT2RPw5DlJww/uILJkqiX1h/iU+VNDo+aU44ibe0fGzBoFAAWj/tRdkD1Fq7zPrAsDbY1nEi6CLHzfOj5+wRMFeZVWEFqQ8N93qO0iynkp7Zk/jJ6wYCQAtL381NuC809q4YZSnv8ze/Q9+4UPu7lUjJl+Djt2DVEmbRp62dd3tvLab5N2qu0SmW9dG8jIpLzCP0Ws5J/KLPlnVuG2HpNvLiBB50LYMAz/ypDBB0sZGmb6/tHkpVqUr48pqHugRw4UFaYFq7QETrLlMQpUq9KqLdFdrgis2EYGw47HD+42+d4+PoXrWPhtluPWmPCHmio9XOaTP1AE4QX+t4fNYNPclLlGZrY8qo1oz6RyF+XC4t8iknjGM6N/LTvloUFpyzrRjxQUSanvN6zIoYISQ10dGyHz6Ue1iFfmNzZNERkEFJAFwdHhhz6zWGVbf6JhFmbycn7k5EUDgQXKyTX/n8i1rFVG+ATPoX9nEkX/Ird8pjaFY1Hq563zTnv2yybHl3q+wlu/ZJ1RfuhSqU0Lpl9IUrlE/J42jQfNVNt6z7RPgBSvF0WtaVsWTV2n3rinKXh74bt25bFlyjHKmVv+owIzYQmOl5YVLdx434mvmL0mFpu2/XbrXcfdLXtPckjQGNcNNVJmYy5PoUGWm5+fue+EO9SbC7eot+5rSpQf/bIygiNZSXfLf556IPXU+Zsi3Q5+UENukYwuwuAIYLSxaT5WELWe4kx2agBBIYeuydw35d/qzTlbvLfmbrH7TEkawBAF3RpNv74qCJUcIUxjPRf0Wth09zf+blROKJZEPWSQifeY0P3xxoU/X290G/OwgB+RRF0NggU2XmCRvcp74PQZneuz26Fs3OXh0jE/KqveIQjgp871d30tYNecv+6Q37Bh55mlx/yiDCd+78NjBvUsdqtM7YesdrinaOSV0T5H/KikkwWd6EQnOtGJTuw96FceKbZtcQ5gXCys+PesSN+BAGAYxuEQ9kWAfWF7YL2O5ahQl9pI4UHbolCHLGuSEPaFjtOlEgC4oUH26dP/hD6HTTlo69+xcHicIeyL7XiPbdEru5d3Hx8r7HsIAESs+PFARSEAhIAhgPFdwLokEqm4sHfvmjgAVJQVDDYM92Ip42OxD55JBnZt+by3EKJad5wAa7e9N4UGhAALCC00tICGEIDU7dPjrc5JpBCGaD88Ijqu661OSwQAyR1/07bfIZn1VmESkSQh5Fyl8o8BQGHU7L+hLX6tr7LXwmDJBpnt5TLOEcKtMGTqVeLsueg6tgbvP7pFIriKzcQiAK9UxiIXNmaDb9mWfhbsXwgMOwQV/+CoTb/fbJbfAeDZ3t859ywvz5cY5D2BXP5cRMeORvLRLYJTF6fbMvsNGDB21OY3V/88ZRqnw0eTK+n4PIWOZmTuYCndFmHwydVDej72/NqFUsplrtDfyVqDbsi3vnRbe5XcrkB2wkcGsGLHj9hehjvIE4AQQnTIFALQkiEEAYIBSe3XhIApNAwJeII5EB951hIAC3ebHEKIQwHM2r4uTAHABIYGaYBIbudoYsfjGnrbscKt1z+0s2132tOeilkB1OH6Z7vrRACzegnAYwDgwIAUvtKaM3Gz26rWlldeaC+VaWqdeGjtHcNnjPj+889tcO3+OeBJCbDW7U5L0jk1MqCCRV6u8VddSsy67KZ1hM1vQLJWQhsMAJuaMgfkqXQFc+byAUVq7asbV3cFsEVInUmE7YFr179+iS0tD9reVhFJ8DwZa0078YXpN5elZeX+xYp1jsleLyzxExK8cbsJ/GCAZu3odeWj+GRbZK3/+34mAWLdoaIYGh4YAYgIRAIAo8OtFgAkmXn3ydHhhmi1lFJpDQVhakY+kEZJEUW6DybO5YLUO6tIpXNgoUkLBeZtjkSEoK0OXDr4Qwzwhw5bQIEQiGuNEwE2pRSPEtGzHQxXWrMgon9sFYjpBoBgKaVRShREtq06m6B8HuhSZbNtSwr89mmwYQjD+/BNbHUKg5AIrQTW5BDt4drGGkNv9XrT3nADKMAySQN++yk3y3XcykEPeK+vmuoh2hMUCjpaD0DSNqQoCpwCEwD8QG2MRe0fcNA2KhOEfqhN/fPtJNoqpVjdUQ6FdtdEEWY+qOPlPSMEPtAazO1y3N7BTcd33sH5C4M1QBoErdnwZelBNTLctS+l1j7DLS88AUgWQmx9D6S1flwptfvdilLqUaXUyGHDhjEArI5EGCtXIn7oj/qlwsVPCgk3opt/1rzsolUdjOePpP+E3Dt0jYIQQrha4zhoQb4Ofoz28Fz/BcsQpiSwYvPRVK6FERpQjsyrjabpWdJPV1VOWnVaKk+utL1Gn+tk15K/J3LcXs9Y1N6UTLUdFY3YTU3J1A+B+HAcNQ4lZc93ezOVkQBQWmg3NaZax9qmefrbW5QN9G4BXkRZIl7xpix5qCRCjzc252+AyIl2jSUclnIzpVv/5tDrg3tX1f2zKLZ2cD67/oYUolfHKX94ivwaAB1RLYN/KYWR28lJSyl/B+AgInpNaz1Z6x287uziqewADCB+bEMi56drlIzDymd+k15+8nz8jz65dmVhSAPwVq9e7a9evdrHypUBgKDpiUteCYT8e94osfIUOxU7ujD6rNBSyp9LKVo09BjDMC7baYG1WMdechlU61ms8+cZQvUBACn1I+AW572m3KiWDH8/v/HRNVgABBL3uWb+ZQAoKgn90hLeiy05HpUM1BVAawve3+jlVH6mTG95GgC6dy+40aH0ypQvapM+LgZeWM/MlCW631XeizWV2T9JQ97kyNY2ANCkn9Le5k0B6YtMg8/yrGR8+oP/fNoh/TuRb5nc6ounpZf81Ufl2UF+3zCMI5j5XACstf45gA/w3y6hdhkBZyYHMt6Xvdy7JD547MvbmJl412k05X62aheuK54wp3y38xOiviNEV9MuBvLbJ2cB26GYiJ7tiD7VgN21rznvPNOcNH8ZHfsIywn37rYf+t3aeNOZ9HLKe2sCy+7W5uiTd7cwWuvriegJAAVa6z8C+LQl5X3ZEYaQUl4L4EAAa5VSV2E3XSM67xxxsBZ0lPBacqaXmfelkgMrz98s2L+TYSEIjG9hyrXR3SxPUkp5EYANzDxcSnkDABNfQRiGcRkznw3AY+bvo90x7+41Lss8HyJhs/Yfyz3+4NNfLjkASLP1LuG3bgLFDrCD0hN2N7+OKAnfY2ZPa306kfzZV40YQoiTlFJXd/hbvRbAot3N0zzmjgMCiKkc5JQd6FuB3Q+ItNvkyC+5cI2hc7NZOPA5dOlnDfy3k+7lHiHEL9qFxz82DOuHXxViSCknA5jevriKOcx8zZ7IVyv3MlA8KnXqyW7mlj1iKLRnjH0McbP0t2wS0jkwk3PP2COV1foaIvyeWSMIvF8KIa76ChDjGK31HcxcQETLmPnSjpnL7mHK7EM15EnQ+UAL/7qP8xrwpZEjv+T0NeT7MzRJeAZfWVTzh657gh/MuBLALQCIGb+W0vzFvjoGMU3zdK31bADFAP6qtf4WgObdzXfYeTNM26P/IyMaZj/zqNqQW7rHur89lZGds26Cl3lDm/FeKZn4/h7KNgBwKRHdxKyhdfBjKeWscDi8L3nKMYQQPw6CYBbaI2ovYeZTOtYzdhuvrrWnKhGarINkVnrqaqw+3987W8e4hrPEpAe0nNyQikyYM2rPjuHETwH4RGAhxNOu6x66DxCjBxHN2xpenYhmoT2QwB5BeMzMMjHp7ldFe8jy6Xu8G9yTmWmn6mUZDQ3XVkEVB6p/UUVVQ2btSm8PZM3MvFIIsZaIDgfQTyl1opRSa62fx06W2r9kHE9EdzBztRAiDeCnzPxjAHvOzWD/03+trYJJwmt928ysPzt4d3nbXt1UwmPuOEBOuG8LTbmfqfauX3wO6wMHE9HKjpbIQojHpZQ1e0v9LcsaQERziLZFengJwB4vX2T8bceJyQs8MfF+5Yy+/Rv7Tic7ds7F4uj7tJx0byZUc+uEz4ODQogfE9EmAExEeSnlXYZhHPIlVru3lPJaIcTmDtJ6RHQzgC57+kHxCbf0tCbMW0NTlrBRM3fOjhEe9tJuZVv3MvzU1TKjqtiKDNFaHGYOqF2s3nigeQ8+wmfmJ0zTfKQjeM8gAAcAOE0IcaBpmiml1Hp8/pF6hGEYw5n5KiL6PdqDFoUA/J2ZvwPgJgCpPfnA8qPrQ0nuMst3ig6lfPplW7R8w3/ryuTnUbnPbePKHXNLt7xZuAxWbDD8LQ+XqMYTNjyyox+MPfWCpJQTtdaXE9HorVGe2u0ixAMAHgqC4D/YcwEFRTgcHpjNZqsBHA9gJDO7Hc98DsAftNbz8DkFMLRr51zrG4kfsPLaLJU8Lr/8rMc/r3f4ue5qOqNnjAzMxGK2QwXwW2eo7BsX4fNzSmJLKcdorc9m5rFEVNBuBUUeM78ihHiaiP5hGMarAN7NZrNNAHKf1kNGIpGE1rp7Pp/vDeAQZj5cCDFYax3XWoOIcgAeI6K5WuvFAD63QaE9bs75Skb+xASw33KRXvGt6Z/n+/vct7ydMXPO8JzILBbCtL2W+tzyM3/+BfT//YQQkwFMZuZDAEQ75sPQWgcANhDRJmbeIKVsEUI0MXMW7eGzXABx3/cTQojSjm6rDMC2g01ElAfwHDMvMwzjL77vP4fPeYfYrZ19TJ6i8yDMkMw3Xe+v+OYVn/czvxB7CGPs7B+xnfglKFBSt1zuPXT2jV/QIFEC6CuEGElERzLzEACVzFzAnxD2goiwXfcEAK3MvFZK+Soz/11K+Tff91/bBc2zZypx9O1joSPzyHCLdT55r6aNZ2APLZF/6eQA6gWN6/UbWAWXS618E02XZB865zOrxBtr+9jXrHrvp5sy9kqotuX/yyzHtu0uQRB0B1BCREVCiBjal+S3Z0sQBMFmImoG0CKlXO953vufZXBZX18vbvjNb4ZmfFAQZJ/B/2irF6n9c3UOsXnKjnSh3JZHoum2k1v/fmEzvlIYdp5pjJt7q5i8mOWkBZ47YeYlnzWLw3oXnBo1TZam5Uu3aGZBQU18b6xqXVWV1S1q3WSZdlpKJ2dFKy/73waft481Ji5oFFOWsaiduyo06pryL7IeX5wLhtW3+oH3+iXCa57J5JieLLzeGTf7/7CLkRSvqusdX78l+7O0dv5VUWicGyZ1Tmtq/QlVgFUUiQzYCzghotFoEQD0GVpQDWFdHJB9TVgEa3Qgx37mMcaEO48PKDJfWbEuyKWesILg1MwT/9f41SQHAKyclgvWv3mRmd1yvRZCelbsajN19B/Kj54R+rSkjzy96bzNGeynna5X9Y1H3mPtQSObjvdIjMvkMk/BiCyX0p2KeI+CL5oVh3YrPSBmieXJbHo1zKKfp/Pua4Ehfnhw34L7DdMOC8t9om9F326oqrJ2TWPcdmFA0blshopkdsNyN1hXl1tx5rtfONu/8Pb18jQvP+qsK8lP/gSalTKKLtjkxRbEJ9zSc2dJrphU2WVLS/7KTGBsqLA3pV/6oPW6NLuvXHjumUs2pf2LtIwEcYc2GqRnCs8/nRkUCpkHAvhcNEosZu8HKceiY3fYE95tGc8tKolYKxzp/eSmZevLN2xpuzYcpPpoQg+h3j9i/abmp8z14apPyrds3OVhc/y83wdU+EdtGA7nW+eH82+dnH7ssi8lBOmX49lnGrR++JvXSJU6j/xsEnZsUkoUL7PHzxz3cbe/06RaSRiXh2VuQ3My+dSmnByorZIfZFb/qbwp69f4CpF0znjOdMwjencrvr9/Wfg3vk9/s4RcRWbsdwAwpKKiW9g09wcin8kPRkWh2800QwcB7SG+D+oWP8HPYZUFekjkjUdGjBhRSIS0FpJGHdDr2pjwtkiduQAA1jflDs5ks8jnvP4ZTT/1W9e9vrPnRCfe2q9ZDl8YOLFLGQpGdsvvmDad2bpyWgu+rrDHzjxKTmh4mY5ezsaE+WmnZnb9zrqZkf2LotFodArcwkMBYP+u8RtNYbeG3fA1YbfgNgDgzXNiB/Qo2UQytnJARWm960Tysf4Th3dLmNeaUuYFiXekVdgQKh5QXgkkXKLbSBqzpXRuLeo+bFpdPVtAe9C/Q3uXfStkWR+Yws4Is+D++vpLExOG7vdPYcReOHL/XhdG3AjD3e+4cQNKpybsEEur2+TB3QsWmKGyd4vOvjbaM5E4MuIkfhSLVRV+kgzM8TNPk7Xz18ljHmFRO7/ZHjvr7L3h3XzpEYTyj577VyvXOF4EGxYoww55TuHPNqjwEqPm9hEfvffJ17Ykk8nkA8g2PT37t2eE27L+QGIVynmyR57lbAB0/Km/dRTx7x3hVb35Qdshhm2dH3KTa9Mpv1BYBXnbcW+wOFeXa/NPjwI2SfPboVjx/krlwop1SbKww5vQew1OLOJclVX2yuKQd7MBHPun2ze77777/gohzb7vBj2XhMhbT37yuGnTTl8WkuplCjbPeWtDdowOxMqez7+Ve6el5W+pXMuv2tpebvq4uidG/7HSmHTXLG3E7yIj3A3+5tUin56cf/TsWejER6a64+++jGrvaRZTljFNWtgqa2+/OlJ74067gQEDuhbFwuap8Uh4lWklngYgagd0vzZs2c/0Kiv+dswx26RT+ifmt51B3YuejxT0eeTE8eMLI7ajISquHOKiW8iwvFhB739Yoe4/Bj6cOTGzOL568ICag7p3LU+E/m2YpY8DTCcf1r8u4ca4tHTAecMHdFkLJB4CgH7lkQEh27lBGLHvoqj/JxpZV4z4nhuqmXeOrJ3/jjz2IaaJ9wc0bt7NGHtnUScRPknFjr3tILOmYamc/BeWRy9jMeGu18yjZ3+rbNzs8M7SMIMKCwsrAGDqIQNGFETCja5pbgw5trKc7j/+y49OKRtY0YWB0p+M7psYEjLDbBUPv+ygEvSxpcwbbsHzllN5G4bN+C/71EFdEjMcO5I1w2UnAUVdLz/jgHC3hLvKtp3AlNFNdqTv+Z9l0TE0bs54e+KcvxqT72Nj8mKWE+a9JMfcftze+C72zuOEtRfbBg48mzlyBVvR3owAxMmn4fs3lpn5v3xa2IlD+vXo9Z+3G4/MG3amtOqoJb2bVxW/vC75aqu2s2EjT76OcMnA2iMLNz1kvrYp96wV6T47lVrzhGsVv5NOb1yxNZ+rvz325D/OXzVvY4Z9IrQw3LmsWr7XrzxS/F6Ld3g2W/g68MEru9J9O7V/HuUJ9zLS1hQ244KC1lats9NDOnl9+pELN3aS47MuBNX8oatHsUsI4XOVEykEp0Gs/iV1dqYtc/elFp+/eVfy6dMH9uZ1xogsy375fN5wogXP5ZLN/xgzYsghT7/wyh+yeVWkGcJxipbmMhsv2pruVxccN+yGe1ZM2NiSeRew1rpuaE0227R+V8tffvSMUIrtmjS75zJELZsJQ/jNedLBQuHhWv+x017Ym+W/TxxEjtTcOTBvhC/VhJMhIwmIHFjn36IAi2yIezLvNryElxf8T7aqdYBc0D4wJ3zoM2P31kFqp++XE/GpzMZJTObBWkZAwSaPgWXC964PVpy5cl+Q+z51Sj0yZk5VHjiDpXky26HeLAxQkAuYgycteEtUkFvq2++tweJpX2i0o7q6Orm8aXRl0kkcJUHHsDaPUmYoQaxBQbYJUj9AudSfgxXfXoV96PD3PunCIHLEjSW+WzBZQZ7Gwjyc7XgIrEBBa8BQzxDoSbC/ygCezUdDG7DgpD1qqten9mJ7vTWkSHvGYE+6h0vWIwXzIYEVi5GwgVybZlL/EcqbKxTd5604/Y19Uc77un8LCk2eO9TTmMDsTGHoQWyGI0wmwFlInckC/CqRfoMgX4POv2Eju1ZoZ33AMmMayZwV0v4mLlFIRTXwBhAJRJlTInJJZbbqwHaU65hIdQl0qIcPuZ8QcgBTsB9rUaXJKYRhg0mCvZQvoNZI8FLN/hLVsvFJPHV5dp8W7ldlClxdXW/82+1VFWhxOJN5pC/lwQzuKoXrQtpQrEE6D6l9ABRo8ttIiyaCldSk8lqzApEGsSkEm2AdYUaCiBICwoYwoMgGkQlSCjpIKyK1QRJeZIWVAeGJ8k3NzzSu3nsC+HWSYycoO+C34Q3deg4UjEEm+QO1MAezpkrooEQBDkvDJWiLYEKT2CYK4vZ/WCsQIyD4OYAyJLiFA+NdKYNXFAevCOBl12/6T/JjIll2kmMfRFVVvbW+byKUTTslHhcWQ6qI5JwDMiS0EBBEkn2tBJRSZt6QVobgN9m59zekXDOJZZd62Le9CXWiE53oRCc60YlO7HX4/6yANG3qa/aYAAAAAElFTkSuQmCC" alt="Miguel Camacaro Ediciones"></div>
 </header>
 <nav>
-  <div class="nr"><a href="#conceptos">1. Conceptos</a><a href="#datos">2. Datos</a><a href="#tendencia">3. Tendencia central</a><a href="#dispersion">4. Dispersión</a></div>
-  <div class="nr"><a href="#graficos">5. Gráficos</a><a href="#normalidad">6. Normalidad</a><a href="#saneamiento">7. Saneamiento e IC</a></div>
+  <div class="nr"><a href="#conceptos">1. Conceptos</a><a href="#datos">2. Datos y Dispersión</a><a href="#tendencia">3. Tendencia central</a><a href="#dispersion">4. Dispersión</a></div>
+  <div class="nr"><a href="#graficos">5. Gráficos</a><a href="#normalidad">6. Normalidad</a><a href="#saneamiento">7. Saneamiento, IC y Avalúo</a></div>
 </nav>
 <main>
 
@@ -93,10 +109,10 @@ footer{text-align:center;color:var(--m);font-size:.82rem;margin-top:10px}
   <div class="g3">
     <div class="box"><b>Cualitativa nominal:</b> categorías sin orden (tipo de inmueble, zona). Resumen: frecuencias y moda. Gráficos: barras y sectores.</div>
     <div class="box"><b>Cuantitativa discreta:</b> valores enteros contables (habitaciones, plantas). Resumen: media, mediana, moda y dispersión. Gráfico: barras por valor.</div>
-    <div class="box"><b>Cuantitativa continua:</b> medidas en un intervalo (área, precio, valor unitario). Resumen completo y pruebas de normalidad. Gráficos: histograma, caja y Q-Q.</div>
+    <div class="box"><b>Cuantitativa continua:</b> medidas en un intervalo (área, precio, valor unitario). Resumen completo y prueba de normalidad. Gráficos: histograma, caja y Q-Q.</div>
   </div>
   <h3>Ruta de análisis</h3>
-  <p>(1) Cargar la base y elegir la variable → (2) medidas de tendencia central → (3) medidas de dispersión → (4) gráficos → (5) prueba de normalidad asociada al histograma. Cada paso incluye la fórmula, el cálculo con sus datos y su interpretación.</p>
+  <p>(1) Cargar la base, visualizar dispersión (X e Y) y elegir la variable → (2) medidas de tendencia central → (3) medidas de dispersión → (4) gráficos → (5) prueba de normalidad asociada al histograma → (6) saneamiento de la muestra, intervalo de confianza y estimación del valor del inmueble. Cada paso incluye la fórmula, el cálculo con sus datos y su interpretación.</p>
 </section>
 
 <section class="card" id="datos">
@@ -107,8 +123,21 @@ footer{text-align:center;color:var(--m);font-size:.82rem;margin-top:10px}
     <div><label for="var">Variable a analizar</label><select id="var" disabled></select></div>
     <div><label for="tipo">Clasifique la variable (obligatorio)</label><select id="tipo"><option value="">— Seleccione el tipo —</option><option value="nom">Cualitativa nominal (categorías sin orden)</option><option value="ord">Cualitativa ordinal (categorías con orden)</option><option value="bin">Binaria / dicotómica (2 categorías)</option><option value="disc">Cuantitativa discreta (valores enteros)</option><option value="cont">Cuantitativa continua (medidas)</option></select><div id="sug" style="font-size:.78rem;color:var(--m);margin-top:4px"></div></div>
   </div>
-  <div class="row"><button class="btn t" id="go" disabled>Analizar variable</button><button class="btn g" id="demo">Cargar datos de ejemplo</button></div>
-  <div id="info" class="out"></div><div id="prev" class="tw"></div>
+  <div class="row"><button class="btn t" id="go" disabled>Analizar variable</button><button class="btn g" id="reset" type="button">Reiniciar / Limpiar todo</button></div>
+  <div id="info" class="out"></div>
+  <div id="prev" class="tw"></div>
+
+  <!-- Diagrama de dispersión ubicado debajo de la base de datos (Muestra Original) -->
+  <div style="margin-top:22px;padding-top:16px;border-top:2px solid #e2e8f0">
+    <h3>Diagrama de dispersión de la muestra original: variable explicada (Y) frente a variable explicativa (X)</h3>
+    <p>Cada punto representa un inmueble de la base de datos cargada. Seleccione la variable explicada (<strong>Y</strong>, p. ej., precio unitario o total) y la variable explicativa (<strong>X</strong>, p. ej., área o superficie).</p>
+    <div class="ctl">
+      <div><label for="ysel">Variable explicada (Y)</label><select id="ysel" disabled></select></div>
+      <div><label for="xsel">Variable explicativa (X)</label><select id="xsel" disabled></select></div>
+      <div><label>&nbsp;</label><button class="btn t" id="xyb" type="button" style="width:100%" disabled>Graficar dispersión</button></div>
+    </div>
+    <div id="o-xy" class="out ph">Cargue una base de datos con al menos dos variables cuantitativas para visualizar el diagrama de dispersión.</div>
+  </div>
 </section>
 
 <section class="card" id="tendencia">
@@ -144,41 +173,33 @@ footer{text-align:center;color:var(--m);font-size:.82rem;margin-top:10px}
   <div class="eq"><div class="f"><i>m</i> = 1 + 3,322 · log<sub>10</sub>(<i>n</i>) &nbsp;&nbsp; <i>C</i> = <fr><u><i>x</i><sub>máx</sub> − <i>x</i><sub>mín</sub></u><s><i>m</i></s></fr></div><div class="n">(5.1) Número de clases (m) y amplitud (C)</div></div>
   <p style="font-size:.85rem;color:var(--m)">La amplitud <i>C</i> se <strong>redondea hacia arriba a dos decimales</strong> para que las <i>m</i> clases cubran todo el rango de los datos. Si alguna clase queda sin datos, la distribución se reajusta a <i>m</i> − 1 clases y se recalcula <i>C</i>, hasta que ninguna clase quede vacía.</p>
   <div id="o-gra" class="out ph">Cargue una base de datos, clasifique la variable y presione «Analizar variable».</div>
-  <h3 style="margin-top:22px">Diagrama de dispersión: variable explicada frente a una variable explicativa</h3>
-  <p>Cada punto es un inmueble de la muestra. Escoja la variable explicada (el precio), la variable explicativa y si desea usar la muestra total o la saneada (con el criterio elegido en el Paso 7).</p>
-  <div class="ctl c4">
-    <div><label for="ysel">Variable explicada (Y, precio)</label><select id="ysel"></select></div>
-    <div><label for="xsel">Variable explicativa (X)</label><select id="xsel"></select></div>
-    <div><label for="xsan">Muestra</label><select id="xsan"><option value="0">Muestra total</option><option value="1">Muestra saneada</option></select></div>
-    <div><label>&nbsp;</label><button class="btn t" id="xyb" type="button" style="width:100%">Graficar dispersión</button></div>
-  </div>
-  <div id="o-xy" class="out ph">Cargue una base de datos con al menos dos variables cuantitativas.</div>
 </section>
 
 <section class="card" id="normalidad">
   <h2><button type="button" class="btn g psec" data-p="normalidad">Imprimir sección</button><span class="step">Paso 6</span>Prueba de normalidad</h2>
   <p>Muchas técnicas de valuación (regresión, intervalos de confianza) suponen normalidad. Se contrasta <strong>H<sub>0</sub>: la variable sigue una distribución normal</strong> contra H<sub>1</sub>: no la sigue, con nivel de significancia α = 0,05. Si el valor p es mayor que α no se rechaza H<sub>0</sub>.</p>
   <div class="eq"><div class="f"><i>JB</i> = <fr><u><i>n</i></u><s>6</s></fr> [ <i>g</i><sub>1</sub><sup>2</sup> + <fr><u><i>g</i><sub>2</sub><sup>2</sup></u><s>4</s></fr> ] ~ χ<sup>2</sup><sub>(2)</sub></div><div class="n">(6.1) Jarque-Bera</div></div>
-  <div class="eq"><div class="f"><i>W</i> = <fr><u>( ∑ <i>a<sub>i</sub></i> <i>x</i><sub>(<i>i</i>)</sub> )<sup>2</sup></u><s>∑ (<i>x<sub>i</sub></i> − <i>x̄</i>)<sup>2</sup></s></fr></div><div class="n">(6.2) Shapiro-Wilk</div></div>
-  <p style="font-size:.85rem;color:var(--m)">JB contrasta asimetría y curtosis (p = e<sup>−JB/2</sup>). Shapiro-Wilk compara los datos ordenados <i>x</i><sub>(i)</sub> con los cuantiles normales esperados mediante los coeficientes <i>a<sub>i</sub></i> (aproximación de Royston, 3 ≤ n ≤ 5000). W cercano a 1 indica normalidad.</p>
+  <p style="font-size:.85rem;color:var(--m)">La prueba de Jarque-Bera contrasta si la asimetría (<i>g</i><sub>1</sub>) y el exceso de curtosis (<i>g</i><sub>2</sub>) de los datos coinciden con los de una distribución normal (p = e<sup>−JB/2</sup>).</p>
   <div id="o-nor" class="out ph">Cargue una base de datos, clasifique la variable y presione «Analizar variable».</div>
 </section>
 
 <section class="card" id="saneamiento">
-  <h2><button type="button" class="btn g psec" data-p="saneamiento">Imprimir sección</button><span class="step">Paso 7</span>Saneamiento de la muestra y precio medio con intervalo de confianza</h2>
-  <p>Los datos atípicos distorsionan la media y la dispersión. El <strong>saneamiento</strong> elimina las observaciones que se alejan de la media más de un límite <i>c</i>, definido según el criterio que usted escoja. Luego se recalculan las medidas de tendencia central y de dispersión (aplicado en una sola pasada) y, si la variable es el precio unitario, se estima el precio medio con su intervalo de confianza.</p>
+  <h2><button type="button" class="btn g psec" data-p="saneamiento">Imprimir sección</button><span class="step">Paso 7</span>Saneamiento de la muestra, intervalo de confianza y valor del inmueble</h2>
+  <p>Los datos atípicos distorsionan la media y la dispersión. El <strong>saneamiento</strong> elimina las observaciones que se alejan de la media más de un límite <i>c</i>, definido según el criterio que usted escoja. Luego se recalculan las medidas de tendencia central y de dispersión (aplicado en una sola pasada) y, si la variable corresponde al precio unitario o al precio total, se estima el precio medio con su intervalo de confianza y el valor del inmueble.</p>
   <div class="eq"><div class="f"><i>DM</i> = <fr><u>∑ |<i>x<sub>i</sub></i> − <i>x̄</i>|</u><s><i>n</i></s></fr> &nbsp; → descartar si |<i>x<sub>i</sub></i> − <i>x̄</i>| &gt; <i>k</i> · <i>DM</i></div><div class="n">(7.1) Desviación media</div></div>
   <div class="eq"><div class="f">descartar si |<i>x<sub>i</sub></i> − <i>x̄</i>| &gt; <i>k</i> · <i>s</i></div><div class="n">(7.2) Desviación estándar</div></div>
   <div class="eq"><div class="f"><i>z<sub>i</sub></i> = <fr><u>|<i>x<sub>i</sub></i> − <i>x̄</i>|</u><s><i>s</i></s></fr> &nbsp; → descartar si <i>n</i> · <i>P</i>(|<i>Z</i>| &gt; <i>z<sub>i</sub></i>) &lt; 0,50</div><div class="n">(7.3) Chauvenet</div></div>
-  <div class="eq"><div class="f"><i>IC</i> = <i>x̄</i> ± <i>t</i><sub>((1+γ)/2; <i>n</i>−1)</sub> · <fr><u><i>s</i></u><s>√<i>n</i></s></fr></div><div class="n">(7.4) Intervalo de confianza de la media (γ = nivel de confianza)</div></div>
-  <div class="ctl c4">
+  <div class="eq"><div class="f">IC = <i>X̄</i> ± <i>t</i><sub>α/2, <i>n</i>−1</sub> <span class="p-lg"><fr><u><i>s</i></u><s>√<i>n</i></s></fr></span></div><div class="n">(7.4) Intervalo de confianza de la media</div></div>
+  <div class="ctl c6">
     <div><label for="msan">Criterio de saneamiento</label><select id="msan"><option value="dm">Desviación media</option><option value="sd" selected>Desviación estándar</option><option value="ch">Chauvenet</option></select></div>
     <div><label for="ksan">Factor k (solo desviaciones)</label><input type="text" id="ksan" inputmode="decimal" value="2,00"></div>
-    <div><label for="psan">¿Es el precio unitario?</label><select id="psan"><option value="0">No</option><option value="1">Sí, es el precio unitario</option></select></div>
+    <div><label for="psan">¿Es una variable de precio?</label><select id="psan"><option value="0">No</option><option value="pu">Sí, es Precio Unitario (UM/m²)</option><option value="pt">Sí, es Precio Total (UM)</option></select></div>
     <div><label for="csan">Nivel de confianza (%)</label><input type="text" id="csan" inputmode="decimal" value="80,00"></div>
+    <div><label for="asan">Área de construcción del sujeto (m²)</label><input type="text" id="asan" inputmode="decimal" value="100,00"></div>
+    <div><label for="arbsan">Campo de arbitrio (%) [NBR 14653-2]</label><input type="text" id="arbsan" inputmode="decimal" value="15,00"></div>
   </div>
   <div class="row"><button class="btn t" id="san" disabled>Sanear muestra y calcular</button></div>
-  <p style="font-size:.82rem;color:var(--m);margin-top:8px">El precio medio y su intervalo de confianza se calculan solo cuando la variable se marca como precio unitario. El nivel de confianza inicial (80,00 %) puede cambiarse libremente.</p>
+  <p style="font-size:.82rem;color:var(--m);margin-top:8px">Si selecciona <strong>Precio Unitario</strong>, el valor del inmueble se obtiene multiplicando por el área de construcción del sujeto. Si selecciona <strong>Precio Total</strong>, no se multiplica por el área y se reporta directamente el valor total.</p>
   <div id="o-san" class="out ph">Cargue una base de datos, clasifique la variable y presione «Analizar variable».</div>
 </section>
 <div class="row" style="justify-content:center;margin:6px 0 24px"><button class="btn" type="button" data-p="all">Imprimir todos los resultados</button></div>
@@ -202,18 +223,7 @@ function qnorm(p){const a=[-39.69683028665376,220.9460984245205,-275.92851044696
  if(p<.02425){q=Math.sqrt(-2*Math.log(p));return(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}
  if(p>.97575){q=Math.sqrt(-2*Math.log(1-p));return-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}
  q=p-.5;r=q*q;return(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}
-function pnorm(z){const t=1/(1+.2316419*Math.abs(z)),d=.3989422804*Math.exp(-z*z/2),p=d*t*(.31938153+t*(-.356563782+t*(1.781477937+t*(-1.821255978+t*1.330274429))));return z>0?1-p:p;}
 function jb(S){const v=S.n/6*(S.g1*S.g1+S.g2*S.g2/4);return{jb:v,p:Math.exp(-v/2)};}
-function sw(s){const n=s.length;if(n<3||n>5000)return null;const nn2=n>>1,P=(c,x)=>c.reduce((r,v,j)=>r+v*Math.pow(x,j),0);let a=[];
- if(n===3)a=[Math.SQRT1_2];else{const an=n+.25,m=[];let s2=0;for(let i=1;i<=nn2;i++){const q=qnorm((i-.375)/an);m.push(q);s2+=q*q;}s2*=2;const ss=Math.sqrt(s2),rsn=1/Math.sqrt(n);
-  const a1=P([0,.221157,-.147981,-2.07119,4.434685,-2.706056],rsn)-m[0]/ss;a=m.slice();let fac;
-  if(n>5){const a2=-m[1]/ss+P([0,.042981,-.293762,-1.752461,5.682633,-3.582633],rsn);fac=Math.sqrt((s2-2*m[0]**2-2*m[1]**2)/(1-2*a1*a1-2*a2*a2));a[0]=a1;a[1]=a2;for(let i=2;i<nn2;i++)a[i]=-m[i]/fac;}
-  else{fac=Math.sqrt((s2-2*m[0]**2)/(1-2*a1*a1));a[0]=a1;for(let i=1;i<nn2;i++)a[i]=-m[i]/fac;}}
- const mean=sum(s)/n,ssd=sum(s.map(v=>(v-mean)**2));if(!ssd)return null;let b=0;for(let i=0;i<nn2;i++)b+=a[i]*(s[n-1-i]-s[i]);const w=Math.min(b*b/ssd,1);let p;
- if(n===3)p=Math.max(0,6/Math.PI*(Math.asin(Math.sqrt(w))-Math.asin(Math.sqrt(.75))));
- else{let y=Math.log(1-w),mu,sg;if(n<=11){const g=-2.273+.459*n;if(y>=g)return{w,p:0};y=-Math.log(g-y);mu=P([.544,-.39978,.025054,-6.714e-4],n);sg=Math.exp(P([1.3822,-.77857,.062767,-.0020322],n));}
-  else{const x=Math.log(n);mu=P([-1.5861,-.31082,-.083751,.0038915],x);sg=Math.exp(P([-.4803,-.082676,.0030302],x));}p=pnorm(-(y-mu)/sg);}
- return{w,p};}
 function hist(x,disc){const n=x.length,mn=Math.min(...x),mx=Math.max(...x);
  if(disc){const lows=[...new Set(x)].sort((a,b)=>a-b),cnt=lows.map(v=>x.filter(t=>t===v).length);return{k:lows.length,k0:lows.length,w:1,lows,mids:lows,ups:lows,cnt,disc};}
  const R=mx-mn,k0=Math.ceil(1+Math.log2(n));let m=k0,C,cnt;
@@ -229,10 +239,10 @@ function qt(p,v){let lo=0,hi=1e3;for(let i=0;i<200;i++){const m=(lo+hi)/2;if(tcd
 /*END*/
 const $=id=>document.getElementById(id),f=fmt,NUMT=t=>t==='disc'||t==='cont';
 const LBL={nom:'Cualitativa nominal',ord:'Cualitativa ordinal',bin:'Binaria (dicotómica)',disc:'Cuantitativa discreta',cont:'Cuantitativa continua'};
-let D=null,charts=[],cur=null;
+let D=null,charts=[],cur=null,xyChart=null,xySanChart=null;
 const fv=x=>cur&&cur.disc&&Number.isInteger(x)?f(x,0):f(x);
 const fp=p=>p<.01?'&lt; 0,01':f(p);
-function destroy(){charts.forEach(c=>c.destroy());charts=[];}
+function destroy(){charts.forEach(c=>c.destroy());charts=[];if(xySanChart){xySanChart.destroy();xySanChart=null;}}
 function parseCSV(t){t=t.replace(/^\uFEFF/,'');const l=t.split(/\r?\n/)[0],d=l.includes(';')?';':l.includes('\t')?'\t':',';const rows=[];let r=[],c='',q=false;
  for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++;}else q=false;}else c+=ch;}
   else if(ch==='"')q=true;else if(ch===d){r.push(c);c='';}else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&t[i+1]==='\n')i++;r.push(c);rows.push(r);r=[];c='';}else c+=ch;}
@@ -247,19 +257,31 @@ function setData(rows){rows=rows.filter(r=>r.some(v=>String(v).trim()!==''));if(
  $('var').disabled=false;$('go').disabled=false;hint();
  const cell=(v,j)=>{const s=D.sug[j],x=num(v);if((s==='cont'||s==='disc')&&!isNaN(x))return f(x,s==='cont'?2:(Number.isInteger(x)?0:2));return String(v===undefined?'':v).replace(/</g,'&lt;');};
  $('prev').innerHTML='<p style="margin-top:12px"><strong>Vista previa</strong> ('+(rows.length-1)+' filas × '+heads.length+' variables)</p><table><thead><tr>'+heads.map(h=>'<th>'+h.replace(/</g,'&lt;')+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(1,7).map(r=>'<tr>'+heads.map((_,j)=>'<td>'+cell(r[j],j)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
- $('info').innerHTML='';fillXY();$('o-xy').className='out ph';$('o-xy').textContent='Seleccione X, Y y el tipo de precio; luego presione «Graficar dispersión y estimar».';}
+ $('info').innerHTML='';fillXY();}
 function freq(a){const m={};a.forEach(v=>m[v]=(m[v]||0)+1);return Object.entries(m).sort((x,y)=>y[1]-x[1]);}
 const T=(h,rows)=>'<div class="tw"><table><thead><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
 const I=t=>'<div class="int">'+t+'</div>';
 const OUT=['o-ten','o-dis','o-gra','o-nor','o-san'],PH='Cargue una base de datos, clasifique la variable y presione «Analizar variable».';
-function setSan(on){['msan','ksan','psan','csan','san'].forEach(i=>$(i).disabled=!on);}
+function setSan(on){['msan','ksan','psan','csan','asan','arbsan','san'].forEach(i=>$(i).disabled=!on);updateSanInputs();}
+function updateSanInputs(){
+ if(!cur||!NUMT(cur.type))return;
+ const pType=$('psan').value;
+ const isPrice=(pType==='pu'||pType==='pt');
+ $('csan').disabled=!isPrice;
+ $('arbsan').disabled=!isPrice;
+ $('asan').disabled=(pType!=='pu');
+ $('ksan').disabled=$('msan').value==='ch';
+}
 function analyze(){if(!D)return;const type=$('tipo').value;if(!type){alert('Primero clasifique la variable: seleccione su tipo en la lista «Tipo de variable».');$('tipo').focus();return;}
  destroy();const j=+$('var').value,raw=D.cols[j],name=D.heads[j],fl=raw.map(v=>v==null?'':String(v).trim()).filter(v=>v!=='');
  const ph=t=>{OUT.forEach(i=>{$(i).className='out ph';$(i).textContent=t;});cur=null;setSan(false);$('info').innerHTML='';};
  if(NUMT(type)){const nn=[],idx=[];raw.forEach((v,i)=>{const t=num(v);if(!isNaN(t)){nn.push(t);idx.push(i+1);}});
   if(nn.length<4||nn.length<.5*fl.length){ph('La variable «'+name+'» no contiene suficientes valores numéricos para clasificarla como cuantitativa. Cambie el tipo de variable.');return;}
   const S=stats(nn);if(!(S.sd>0)){ph('La variable es constante (desviación estándar = 0,00): no es posible el análisis.');return;}
-  cur={name,type,nn,idx,S,H:hist(nn,type==='disc'),n:nn.length,disc:type==='disc'};}
+  cur={name,type,nn,idx,S,H:hist(nn,type==='disc'),n:nn.length,disc:type==='disc'};
+  if(/pu|precio_m2|unitario|valor_m2|um_m2|m2/i.test(name)&&!/area|área|superf/i.test(name))$('psan').value='pu';
+  else if(/precio_total|valor_total|precio|valor|total/i.test(name))$('psan').value='pt';
+ }
  else{const F=freq(fl);if(type==='bin'&&F.length!==2){ph('Una variable binaria debe tener exactamente 2 categorías; «'+name+'» tiene '+F.length+'.');return;}
   if(fl.length<2){ph('No hay suficientes datos.');return;}if(type!=='nom')F.sort((a,b)=>String(a[0]).localeCompare(String(b[0]),'es',{numeric:true}));cur={name,type,F,n:fl.length};}
  $('info').innerHTML='<div class="box"><b>Variable:</b> '+name+' &nbsp;·&nbsp; <b>Tipo (definido por el usuario):</b> '+LBL[type]+' &nbsp;·&nbsp; <b>Datos válidos:</b> '+f(cur.n,0)+' &nbsp;·&nbsp; <b>Vacíos o no numéricos descartados:</b> '+f(raw.length-cur.n,0)+'</div>';
@@ -275,9 +297,12 @@ function central(x,disc){const n=x.length,S=stats(x),H=hist(x,disc),cm=new Map()
  return{S,H,mx,md,gm,gmed,gmo,gi,ga,M};}
 const mstr=C=>C.md.length?C.md.slice(0,5).map(fv).join('; ')+(C.md.length>5?'…':'')+' (f = '+C.mx+')':'No existe (ningún valor se repite)';
 const gstr=C=>C.H.disc?C.gmo.map(fv).join('; ')+' (f = '+C.M.m+')':f(C.gmo[0])+' (clase ['+f(C.H.lows[C.M.i])+'; '+f(C.H.ups[C.M.i])+'), f = '+C.M.m+')';
-function normTests(S){const J=jb(S),W=sw(S.s),ok=p=>p>=.05,tx=p=>ok(p)?'No se rechaza H<sub>0</sub> (compatible con normalidad)':'Se rechaza H<sub>0</sub> (no normal)';
- const r=[['Jarque-Bera','JB = '+f(J.jb),fp(J.p),tx(J.p)]];if(W)r.push(['Shapiro-Wilk','W = '+f(W.w),fp(W.p),tx(W.p)]);
- return{t:T(['Prueba','Estadístico','Valor p (α = 0,05)','Decisión'],r)+(W?'':'<div class="warn">Shapiro-Wilk no aplica (n &gt; 5000 o datos degenerados).</div>'),both:W?ok(J.p)&&ok(W.p):ok(J.p),none:W?!ok(J.p)&&!ok(W.p):!ok(J.p)};}
+function normTests(S){
+ const J=jb(S),ok=J.p>=.05;
+ const tx=ok?'No se rechaza H<sub>0</sub> (compatible con normalidad)':'Se rechaza H<sub>0</sub> (no normal)';
+ const r=[['Jarque-Bera','JB = '+f(J.jb),fp(J.p),tx]];
+ return{t:T(['Prueba','Estadístico','Valor p (α = 0,05)','Decisión'],r),ok};
+}
 
 function numeric(){const{S,H,name,nn}=cur,C=central(nn,cur.disc),n=S.n,dif=S.mean-S.med,rel=Math.abs(dif)/S.sd,g1=S.g1,M=C.M;cur.C=C;
  const forma=rel<.1?'aproximadamente simétrica':dif>0?'asimétrica positiva (cola hacia valores altos)':'asimétrica negativa (cola hacia valores bajos)';
@@ -302,7 +327,7 @@ function numeric(){const{S,H,name,nn}=cur,C=central(nn,cur.disc),n=S.n,dif=S.mea
  histChart('c-h',false,S,H);box();
  const N=normTests(S);
  $('o-nor').innerHTML='<div class="row" style="margin:0"><div style="flex:1;min-width:300px"><div class="cv"><canvas id="c-n"></canvas></div></div><div style="flex:1;min-width:300px"><div class="cv"><canvas id="c-q"></canvas></div></div></div>'+N.t
-  +I('El histograma se contrasta con la curva normal teórica (misma media y desviación). En el gráfico Q-Q, si los puntos siguen la recta la variable es normal. '+(N.both?'Las pruebas no rechazan la normalidad (p ≥ 0,05) y el histograma es compatible con una campana simétrica: pueden usarse la media y los métodos paramétricos.':N.none?'Las pruebas rechazan la normalidad (p &lt; 0,05); coincide con la asimetría observada (g<sub>1</sub> = '+f(S.g1)+'). Se recomienda usar la mediana, sanear la muestra (Paso 7) o transformar la variable (por ejemplo, logaritmo natural).':'Las pruebas dan resultados mixtos: la evidencia contra la normalidad es parcial. Revise el histograma y el Q-Q.')+(cur.disc?' Nota: en variables discretas la normalidad es solo una aproximación.':''));
+  +I('El histograma se contrasta con la curva normal teórica (misma media y desviación). En el gráfico Q-Q, si los puntos siguen la recta la variable es normal. '+(N.ok?'La prueba de Jarque-Bera no rechaza la normalidad (p ≥ 0,05) y el histograma es compatible con una campana simétrica: pueden usarse la media y los métodos paramétricos.':'La prueba de Jarque-Bera rechaza la normalidad (p &lt; 0,05); coincide con la asimetría observada (g<sub>1</sub> = '+f(S.g1)+'). Se recomienda usar la mediana, sanear la muestra (Paso 7) o transformar la variable (por ejemplo, logaritmo natural).')+(cur.disc?' Nota: en variables discretas la normalidad es solo una aproximación.':''));
  histChart('c-n',true,S,H);qq();}
 
 function histChart(id,curve,S,H){const mu=S.mean,sd=S.sd,pdf=x=>Math.exp(-.5*((x-mu)/sd)**2)/(sd*Math.sqrt(2*Math.PI));
@@ -342,19 +367,20 @@ function categorical(){const{F,n,name,type}=cur,top=F.reduce((a,b)=>b[1]>a[1]?b:
  $('o-gra').innerHTML=T(['Categoría','f<sub>i</sub>','h<sub>i</sub>','H<sub>i</sub> acumulada'],F.map(e=>{acc+=e[1];return[e[0],f(e[1],0),pc(e[1]),pc(acc)];}))
   +'<div class="g2"><div><h3>Diagrama de barras</h3><div class="cv"><canvas id="c-bar"></canvas></div></div><div><h3>Diagrama de sectores</h3><div class="cv"><canvas id="c-pie"></canvas></div></div></div>'
   +I('Las barras comparan las frecuencias absolutas y los sectores muestran la participación de cada categoría. '+(F.length>12?'Hay '+f(F.length,0)+' categorías: puede tratarse de un identificador o texto libre, poco útil en el análisis univariado.':'«'+top[0]+'» concentra '+pc(top[1])+' de la muestra.'));
- $('o-nor').innerHTML='<div class="warn">Las pruebas de normalidad (Jarque-Bera, Shapiro-Wilk) solo aplican a variables cuantitativas.</div>';
+ $('o-nor').innerHTML='<div class="warn">La prueba de normalidad de Jarque-Bera solo aplica a variables cuantitativas.</div>';
  const L=F.slice(0,20).map(e=>e[0]),V=F.slice(0,20).map(e=>e[1]),col=['#1e3a8a','#0d9488','#d97706','#3b82f6','#dc2626','#7c3aed','#64748b','#16a34a'];
  charts.push(new Chart($('c-bar'),{type:'bar',data:{labels:L,datasets:[{data:V,backgroundColor:L.map((_,i)=>col[i%8])}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,title:{display:true,text:'Frecuencia'},ticks:{callback:v=>f(v,0)}}}}}));
  charts.push(new Chart($('c-pie'),{type:'doughnut',data:{labels:L,datasets:[{data:V,backgroundColor:L.map((_,i)=>col[i%8])}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{position:'bottom'}}}}));}
 
-/* ---------- Saneamiento e intervalo de confianza ---------- */
-function sanear(){if(!cur||!NUMT(cur.type))return;const meth=$('msan').value,k=num($('ksan').value),cl=num($('csan').value),isP=$('psan').value==='1';
+/* ---------- Saneamiento, intervalo de confianza, valor del inmueble y dispersión saneada ---------- */
+function sanear(){if(!cur||!NUMT(cur.type))return;const meth=$('msan').value,k=num($('ksan').value),cl=num($('csan').value),pType=$('psan').value,isPrice=(pType==='pu'||pType==='pt'),area=num($('asan').value)||100,arb=(num($('arbsan').value)||15)/100;
  if(meth!=='ch'&&!(k>0)){alert('Ingrese un factor k mayor que 0,00.');return;}
- if(isP&&!(cl>0&&cl<100)){alert('El nivel de confianza debe estar entre 0,01 y 99,99 %.');return;}
- const{S,nn,idx}=cur,n=nn.length,m=S.mean;let c,crit;
- if(meth==='dm'){const dm=sum(nn.map(v=>Math.abs(v-m)))/n;c=k*dm;crit='Desviación media: DM = '+f(dm)+'; criterio |x − x̄| &gt; '+f(k)+' · DM = '+f(c);}
- else if(meth==='sd'){c=k*S.sd;crit='Desviación estándar: s = '+f(S.sd)+'; criterio |x − x̄| &gt; '+f(k)+' · s = '+f(c);}
- else{const zc=qnorm(1-1/(4*n));c=zc*S.sd;crit='Chauvenet: n·P(|Z| &gt; z) &lt; 0,50 equivale a z &gt; '+f(zc)+'; |x − x̄| &gt; '+f(zc)+' · s = '+f(c);}
+ if(isPrice&&!(cl>0&&cl<100)){alert('El nivel de confianza debe estar entre 0,01 y 99,99 %.');return;}
+ if(pType==='pu'&&!(area>0)){alert('Ingrese un área de construcción del sujeto mayor que 0,00 m².');return;}
+ const{S,nn,idx}=cur,n=nn.length,m=S.mean;let c,crit,critShort;
+ if(meth==='dm'){const dm=sum(nn.map(v=>Math.abs(v-m)))/n;c=k*dm;crit='Desviación media: DM = '+f(dm)+'; criterio |x − x̄| &gt; '+f(k)+' · DM = '+f(c);critShort='Desviación Media (k = '+f(k)+')';}
+ else if(meth==='sd'){c=k*S.sd;crit='Desviación estándar: s = '+f(S.sd)+'; criterio |x − x̄| &gt; '+f(k)+' · s = '+f(c);critShort='Desviación Estándar (k = '+f(k)+')';}
+ else{const zc=qnorm(1-1/(4*n));c=zc*S.sd;crit='Chauvenet: n·P(|Z| &gt; z) &lt; 0,50 equivale a z &gt; '+f(zc)+'; |x − x̄| &gt; '+f(zc)+' · s = '+f(c);critShort='Criterio de Chauvenet';}
  const lo=m-c,hi=m+c,keep=[],rem=[];nn.forEach((v,i)=>{if(v<lo||v>hi)rem.push({v,row:idx[i],d:v-m});else keep.push(v);});
  if(keep.length<4){alert('El criterio elimina demasiados datos (quedarían menos de 4). Aumente k o cambie el método.');return;}
  const S2=stats(keep);if(!(S2.sd>0)){alert('La muestra saneada es constante.');return;}
@@ -367,50 +393,211 @@ function sanear(){if(!cur||!NUMT(cur.type))return;const meth=$('msan').value,k=n
   +'<h3>7.3 Medidas recalculadas con la muestra saneada</h3>'+T(['Medida','Muestra original','Muestra saneada'],cmp)
   +I('Se '+(rem.length?'eliminaron '+f(rem.length,0)+' observaciones fuera del intervalo ['+f(lo)+'; '+f(hi)+']':'conservaron todas las observaciones')+'. La media pasó de '+f(S.mean)+' a '+f(S2.mean)+', la desviación estándar de '+f(S.sd)+' a '+f(S2.sd)+(S.mean>0&&S2.mean>0?' y el coeficiente de variación de '+f(S.cv)+' % a '+f(S2.cv)+' %':'')+(S2.sd<S.sd?': la muestra saneada es más homogénea.':'.'))
   +'<h3>7.4 Histograma y normalidad de la muestra saneada</h3><div class="cv"><canvas id="c-s"></canvas></div>'+normTests(S2).t;
- if(isP){const se=S2.sd/Math.sqrt(n2),t=qt(1-(1-cl/100)/2,n2-1),li=S2.mean-t*se,ls=S2.mean+t*se,am=(ls-li)/S2.mean*100;
-  h+='<h3>7.5 Precio medio e intervalo de confianza (precio unitario)</h3>'+T(['Concepto','Cálculo','Resultado'],[['Tamaño de muestra saneada <i>n</i>','',f(n2,0)],['Precio medio <i>x̄</i>','',  '<b>'+f(S2.mean)+'</b>'],['Desviación estándar <i>s</i>','',f(S2.sd)],['Error estándar <i>s</i>/√<i>n</i>',f(S2.sd)+' / √'+f(n2,0),f(se)],['Nivel de confianza','',f(cl)+' %'],['<i>t</i> crítico (gl = '+f(n2-1,0)+')','',f(t)],['Límite inferior','x̄ − t·s/√n','<b>'+f(li)+'</b>'],['Límite superior','x̄ + t·s/√n','<b>'+f(ls)+'</b>'],['Amplitud relativa del intervalo','(LS − LI) / x̄ × 100',f(am)+' %']])
-  +I('Con la muestra saneada, el precio unitario medio es <b>'+f(S2.mean)+'</b> y el intervalo de confianza del '+f(cl)+' % es <b>['+f(li)+'; '+f(ls)+']</b>. <b>Interpretación frecuentista:</b> si se repitiera el muestreo muchísimas veces, tomando muestras aleatorias independientes de la misma población, y con cada una se calculara un intervalo de confianza del '+f(cl)+' %, aproximadamente el '+f(cl)+' % de esos intervalos contendría el verdadero valor del precio medio (el parámetro poblacional). El nivel de confianza se refiere al procedimiento y no a este intervalo en particular. La amplitud relativa es '+f(am)+' % de la media: cuanto menor, más preciso es el procedimiento con este tamaño de muestra.');}
+
+ if(isPrice){
+  const se=S2.sd/Math.sqrt(n2),t=qt(1-(1-cl/100)/2,n2-1),li=S2.mean-t*se,ls=S2.mean+t*se,am=(ls-li)/S2.mean*100;
+  const clInt=Number.isInteger(cl)?f(cl,0):f(cl);
+  const lblTipo=pType==='pu'?'precio unitario':'precio total';
+  h+='<h3>7.5 Precio medio e intervalo de confianza ('+lblTipo+')</h3>'+T(['Concepto','Cálculo','Resultado'],[
+   ['Tamaño de muestra saneada <i>n</i>','',f(n2,0)],
+   ['Precio medio <i>X̄</i>','','<b>'+f(S2.mean)+'</b>'],
+   ['Desviación estándar <i>s</i>','',f(S2.sd)],
+   ['Error estándar <i>s</i>/√<i>n</i>',f(S2.sd)+' / √'+f(n2,0),f(se)],
+   ['Nivel de confianza','',f(cl)+' %'],
+   ['<i>t</i><sub>α/2, n−1</sub> (gl = '+f(n2-1,0)+')','',f(t)],
+   ['Límite inferior','X̄ − t·(s/√n)','<b>'+f(li)+'</b>'],
+   ['Límite superior','X̄ + t·(s/√n)','<b>'+f(ls)+'</b>'],
+   ['Amplitud relativa del intervalo','(LS − LI) / X̄ × 100',f(am)+' %']])
+   +I('La estimación por intervalo con un nivel de confianza del '+clInt+'%, significa que, si se toman 100 muestras aleatorias independientes y del mismo tamaño de la misma población, el valor medio poblacional de mercado estará contenido en '+clInt+' de esos intervalos calculados, y posiblemente estará contenido en el intervalo entre <b>['+f(li)+'; '+f(ls)+']</b>.');
+
+  // 7.6 Cálculo del valor del inmueble:
+  // Si es Precio Unitario (pu), se multiplica por el área. Si es Precio Total (pt), NO se multiplica por el área (factor = 1).
+  const mult=(pType==='pu')?area:1;
+  const totMin=li*mult,totMed=S2.mean*mult,totMax=ls*mult;
+  const arbLow=totMed*(1-arb),arbHigh=totMed*(1+arb);
+  const admLow=Math.max(totMin,arbLow),admHigh=Math.min(totMax,arbHigh);
+  const arbPctTxt=f(arb*100,2);
+
+  let tblVal='';
+  let subCard1='';
+  let descVal='';
+  if(pType==='pu'){
+   descVal='<p>Estimación del valor total del inmueble sujeto multiplicando el precio unitario por un área de construcción de <b>'+f(area)+' m²</b> y considerando un campo de arbitrio de <b>±'+arbPctTxt+' %</b>:</p>';
+   tblVal=T(['Criterio Aplicado','N° Datos Válidos','P.U. Mínimo (UM/m²)','P.U. Medio (UM/m²)','P.U. Máximo (UM/m²)','Valor Total Mínimo (UM)','Valor Total Medio (UM)','Valor Total Máximo (UM)'],[
+    ['<b>'+critShort+'</b>',f(n2,0),f(li),'<b style="color:#1e3a8a">'+f(S2.mean)+'</b>',f(ls),f(totMin),'<b style="color:#0284c7">'+f(totMed)+'</b>',f(totMax)]
+   ]);
+   subCard1='P.U.: '+f(S2.mean)+' UM/m² × '+f(area)+' m²';
+  }else{
+   descVal='<p>Estimación directa del valor total del inmueble (variable de <b>Precio Total</b>, sin multiplicar por el área de construcción) considerando un campo de arbitrio de <b>±'+arbPctTxt+' %</b>:</p>';
+   tblVal=T(['Criterio Aplicado','N° Datos Válidos','Valor Total Mínimo (UM)','Valor Total Medio (UM)','Valor Total Máximo (UM)'],[
+    ['<b>'+critShort+'</b>',f(n2,0),f(totMin),'<b style="color:#0284c7">'+f(totMed)+'</b>',f(totMax)]
+   ]);
+   subCard1='Valor Total Directo (Muestra Saneada)';
+  }
+
+  h+='<h3>7.6 Valor inmobiliario [puntual y por intervalo]</h3>'
+   +descVal
+   +tblVal
+   +'<div class="appraisal-summary">'
+   +'<h3><span>🎯</span> Dictamen Valuatorio e Intervalo Admisible [Según Norma NBR 14653-2]</h3>'
+   +'<div class="appraisal-grid">'
+   +'<div class="appraisal-card"><div class="appraisal-label">Estimación Central (Muestra Saneada)</div><div class="appraisal-value">'+f(totMed)+' UM</div><div class="appraisal-range">'+subCard1+'</div></div>'
+   +'<div class="appraisal-card"><div class="appraisal-label">Intervalo de Confianza ('+f(cl)+' %)</div><div class="appraisal-value">['+f(totMin)+' - '+f(totMax)+'] UM</div><div class="appraisal-range">Precisión de la Media Muestral</div></div>'
+   +'<div class="appraisal-card"><div class="appraisal-label">Campo de Arbitrio (±'+arbPctTxt+' %) [NBR 14653-2]</div><div class="appraisal-value">['+f(arbLow)+' - '+f(arbHigh)+'] UM</div><div class="appraisal-range">Margen Profesional Valuador</div></div>'
+   +'<div class="appraisal-card" style="border-color:#38bdf8;background:rgba(56,189,248,.15)"><div class="appraisal-label" style="color:#7dd3fc">Intervalo Admisible Final [NBR 14653-2]</div><div class="appraisal-value" style="color:#38bdf8">['+f(admLow)+' - '+f(admHigh)+'] UM</div><div class="appraisal-range">Solapamiento Normativo Óptimo</div></div>'
+   +'</div></div>';
+ }
+
+ // 7.7 Repetir diagrama de dispersión con la muestra saneada si la base tiene al menos 2 variables
+ const canXY=D&&D.heads.length>=2;
+ if(canXY){
+  const curY=+$('var').value;
+  const defX=+$('xsel').value!==curY?+$('xsel').value:D.heads.findIndex((_,j)=>j!==curY);
+  const optsY=D.heads.map((hd,j)=>'<option value="'+j+'"'+(j===curY?' selected':'')+'>'+hd.replace(/</g,'&lt;')+'</option>').join('');
+  const optsX=D.heads.map((hd,j)=>'<option value="'+j+'"'+(j===defX?' selected':'')+'>'+hd.replace(/</g,'&lt;')+'</option>').join('');
+  h+='<div style="margin-top:22px;padding-top:16px;border-top:2px solid #e2e8f0">'
+   +'<h3>7.7 Diagrama de dispersión con la muestra saneada</h3>'
+   +'<p>Seleccione cada variable explicativa (<b>X</b>) para analizar su comportamiento frente a la variable explicada (<b>Y</b>) con la muestra saneada:</p>'
+   +'<div class="ctl">'
+   +'<div><label for="ysel-san">Variable explicada (Y)</label><select id="ysel-san">'+optsY+'</select></div>'
+   +'<div><label for="xsel-san">Variable explicativa (X)</label><select id="xsel-san">'+optsX+'</select></div>'
+   +'<div><label>&nbsp;</label><button class="btn t" id="xyb-san" type="button" style="width:100%">Graficar dispersión saneada</button></div>'
+   +'</div>'
+   +'<div id="o-xy-san" class="out"></div></div>';
+ }
 
  destroy();$('o-san').innerHTML=h;
- // los gráficos de los pasos anteriores se redibujan porque destroy() los eliminó
- numericCharts();histChart('c-s',true,S2,C2.H);}
+ numericCharts();histChart('c-s',true,S2,C2.H);
+ if(canXY){
+  $('ysel-san').onchange=()=>renderSanitizedXY(meth,k);
+  $('xsel-san').onchange=()=>renderSanitizedXY(meth,k);
+  $('xyb-san').onclick=()=>renderSanitizedXY(meth,k);
+  renderSanitizedXY(meth,k);
+ }
+}
 function numericCharts(){const{S,H}=cur;if(!$('c-h'))return;histChart('c-h',false,S,H);box();histChart('c-n',true,S,H);qq();}
 
-function resetAll(){destroy();D=null;cur=null;$('file').value='';$('var').innerHTML='';$('var').disabled=true;$('go').disabled=true;$('tipo').value='';$('sug').textContent='';$('prev').innerHTML='';$('info').innerHTML='';
- OUT.forEach(i=>{$(i).className='out ph';$(i).textContent=PH;});setSan(false);$('msan').value='sd';$('ksan').value='2,00';$('psan').value='0';$('csan').value='80,00';window.scrollTo(0,0);}
-function sample(){let seed=11;const r=()=>(seed=seed*16807%2147483647)/2147483647,g=()=>Math.sqrt(-2*Math.log(r()||1e-9))*Math.cos(2*Math.PI*r());
- const tp=['Apartamento','Casa','Local comercial'],zn=['Norte','Centro','Sur','Este'],rows=[['id','tipo','zona','area_m2','habitaciones','precio_m2','precio_total']];
- for(let i=1;i<=120;i++){const a=Math.max(30,Math.round((95+22*g())*100)/100),z=Math.floor(r()*4),p=Math.round(Math.exp(7.5+.3*g()+(z===1?.25:0))*100)/100;rows.push([i,tp[Math.floor(r()*3)],zn[z],a,Math.max(1,Math.min(6,Math.round(a/32+g()*.6))),p,Math.round(a*p*100)/100]);}return rows;}
+function resetAll(){
+ destroy();
+ if(xyChart){xyChart.destroy();xyChart=null;}
+ D=null;cur=null;
+ $('file').value='';
+ $('var').innerHTML='';$('var').disabled=true;
+ $('go').disabled=true;
+ $('tipo').value='';
+ $('sug').textContent='';
+ $('prev').innerHTML='';
+ $('info').innerHTML='';
+ $('xsel').innerHTML='';$('xsel').disabled=true;
+ $('ysel').innerHTML='';$('ysel').disabled=true;
+ $('xyb').disabled=true;
+ $('o-xy').className='out ph';
+ $('o-xy').textContent='Cargue una base de datos con al menos dos variables cuantitativas para visualizar el diagrama de dispersión.';
+ OUT.forEach(i=>{$(i).className='out ph';$(i).textContent=PH;});
+ setSan(false);
+ $('msan').value='sd';$('ksan').value='2,00';$('psan').value='0';$('csan').value='80,00';$('asan').value='100,00';$('arbsan').value='15,00';
+ window.scrollTo(0,0);
+}
 
 if(typeof Chart!=='undefined')Chart.defaults.plugins.tooltip.enabled=false;
 $('file').addEventListener('change',e=>{const fl=e.target.files[0];if(!fl)return;const rd=new FileReader();
  try{if(/\.xlsx?$/i.test(fl.name)){rd.onload=()=>{const wb=XLSX.read(rd.result,{type:'array'});setData(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:true,defval:''}));};rd.readAsArrayBuffer(fl);}
  else{rd.onload=()=>setData(parseCSV(rd.result));rd.readAsText(fl);}}catch(x){alert('No se pudo leer el archivo.');}});
-$('demo').onclick=()=>setData(sample());
+$('reset').onclick=resetAll;
+if($('reset-top'))$('reset-top').onclick=resetAll;
 $('var').onchange=hint;
 $('go').onclick=()=>{analyze();if(cur)$('tendencia').scrollIntoView();};
 $('san').onclick=sanear;
-$('msan').onchange=()=>{$('ksan').disabled=$('msan').value==='ch'||!cur;};
-['ksan','csan'].forEach(i=>$(i).addEventListener('blur',()=>{$(i).value=f(num($(i).value)||0);}));
-/* ---------- Diagrama de dispersión ---------- */
-let xyChart=null;
-function fillXY(){if(xyChart){xyChart.destroy();xyChart=null;}const nc=D.heads.map((h,j)=>j).filter(j=>D.sug[j]==='cont'||D.sug[j]==='disc'),o=nc.map(j=>'<option value="'+j+'">'+D.heads[j].replace(/</g,'&lt;')+'</option>').join('');
- $('xsel').innerHTML=o;$('ysel').innerHTML=o;const yi=nc.find(j=>/precio|valor|price/i.test(D.heads[j])),xi=nc.find(j=>/area|área|superf/i.test(D.heads[j])&&j!==yi);
- if(yi!==undefined)$('ysel').value=yi;if(xi!==undefined)$('xsel').value=xi;}
-function limits(x,meth,k){const n=x.length,S=stats(x),m=S.mean;let c;if(meth==='dm')c=k*sum(x.map(v=>Math.abs(v-m)))/n;else if(meth==='sd')c=k*S.sd;else c=qnorm(1-1/(4*n))*S.sd;return[m-c,m+c];}
-function xyRun(){const o=$('o-xy');if(!D||$('xsel').options.length<2){alert('Cargue una base de datos con al menos dos variables cuantitativas.');return;}
- const jx=+$('xsel').value,jy=+$('ysel').value,nx=D.heads[jx],ny=D.heads[jy];if(jx===jy){alert('La variable explicativa (X) y la explicada (Y) deben ser distintas.');return;}
- const P=[];D.cols[jx].forEach((v,i)=>{const x=num(v),y=num(D.cols[jy][i]);if(!isNaN(x)&&!isNaN(y))P.push({x,y});});
- if(P.length<5){o.className='out';o.innerHTML='<div class="warn">Se requieren al menos 5 pares de datos numéricos válidos.</div>';return;}
- const san=$('xsan').value==='1',kk=num($('ksan').value)>0?num($('ksan').value):2;let keep=P,rem=[],lim=null;
- if(san){lim=limits(P.map(p=>p.y),$('msan').value,kk);keep=P.filter(p=>p.y>=lim[0]&&p.y<=lim[1]);rem=P.filter(p=>p.y<lim[0]||p.y>lim[1]);}
- if(keep.length<5){o.className='out';o.innerHTML='<div class="warn">El saneamiento deja menos de 5 pares. Aumente k o cambie el criterio en el Paso 7.</div>';return;}
- o.className='out';o.innerHTML='<div class="cv"><canvas id="c-xy"></canvas></div>'+I('Cada punto es un inmueble: su posición horizontal es el valor de <b>'+nx+'</b> y la vertical el de <b>'+ny+'</b>. Si los puntos suben de izquierda a derecha, a mayor '+nx+' mayor '+ny+'; si bajan, a mayor '+nx+' menor '+ny+'; si forman una nube sin dirección, no se observa relación entre las dos variables. '+(san?'Muestra saneada: '+f(keep.length,0)+' pares'+(rem.length?'; se excluyeron '+f(rem.length,0)+' con '+ny+' fuera de ['+f(lim[0])+'; '+f(lim[1])+'] (marcados con ×).':'; ningún par fue excluido con el criterio del Paso 7.'):'Muestra total: '+f(P.length,0)+' pares.'));
+$('msan').onchange=updateSanInputs;
+$('psan').onchange=updateSanInputs;
+['ksan','csan','asan','arbsan'].forEach(i=>$(i).addEventListener('blur',()=>{$(i).value=f(num($(i).value)||0);}));
+
+/* ---------- Diagrama de dispersión (Muestra Original en Paso 2 y Muestra Saneada en Paso 7) ---------- */
+function parseColVal(col){
+ const raw=col.map(v=>v==null?'':String(v).trim());
+ const nums=raw.map(num);
+ const validNums=nums.filter(v=>!isNaN(v));
+ const nonEmpty=raw.filter(v=>v!=='');
+ if(validNums.length>=0.5*nonEmpty.length)return{vals:nums,catMap:null};
+ // Si es texto categórico, codificar categorías de forma ordenada (1, 2, 3...)
+ const cats=[...new Set(nonEmpty)].sort((a,b)=>a.localeCompare(b,'es',{numeric:true}));
+ const map=new Map(cats.map((c,i)=>[c,i+1]));
+ return{vals:raw.map(v=>map.has(v)?map.get(v):NaN),catMap:cats};
+}
+
+function fillXY(){
  if(xyChart){xyChart.destroy();xyChart=null;}
- const ds=[{label:san?'Datos de la muestra saneada':'Datos de la muestra total',data:keep,backgroundColor:'rgba(30,58,138,.7)',pointRadius:4}];
+ // Incluir TODAS las variables de la base de datos para que ninguna variable explicativa quede excluida
+ const allIdx=D.heads.map((_,j)=>j);
+ const o=allIdx.map(j=>'<option value="'+j+'">'+D.heads[j].replace(/</g,'&lt;')+'</option>').join('');
+ $('xsel').innerHTML=o;$('ysel').innerHTML=o;
+ if(allIdx.length<2){
+  $('xsel').disabled=true;$('ysel').disabled=true;$('xyb').disabled=true;
+  $('o-xy').className='out ph';
+  $('o-xy').innerHTML='<div class="warn">La base de datos cargada tiene solo 1 variable. El diagrama de dispersión (X vs. Y) requiere al menos dos variables.</div>';
+  return;
+ }
+ $('xsel').disabled=false;$('ysel').disabled=false;$('xyb').disabled=false;
+ const yi=allIdx.find(j=>/precio|valor|pu|p unitario|price/i.test(D.heads[j]))??0;
+ const xi=allIdx.find(j=>/area|área|superf/i.test(D.heads[j])&&j!==yi)??allIdx.find(j=>j!==yi);
+ if(yi!==undefined)$('ysel').value=yi;
+ if(xi!==undefined)$('xsel').value=xi;
+ xyRunOrig();
+}
+
+function limits(x,meth,k){const n=x.length,S=stats(x),m=S.mean;let c;if(meth==='dm')c=k*sum(x.map(v=>Math.abs(v-m)))/n;else if(meth==='sd')c=k*S.sd;else c=qnorm(1-1/(4*n))*S.sd;return[m-c,m+c];}
+
+function xyRunOrig(){
+ const o=$('o-xy');
+ if(!D||$('xsel').options.length<2){alert('Cargue una base de datos con al menos dos variables.');return;}
+ const jx=+$('xsel').value,jy=+$('ysel').value,nx=D.heads[jx],ny=D.heads[jy];
+ if(jx===jy){
+  o.className='out';
+  o.innerHTML='<div class="warn">Seleccione una variable explicativa (X) distinta de la variable explicada (Y).</div>';
+  return;
+ }
+ const cx=parseColVal(D.cols[jx]),cy=parseColVal(D.cols[jy]);
+ const P=[];
+ for(let i=0;i<D.cols[jx].length;i++){
+  const x=cx.vals[i],y=cy.vals[i];
+  if(!isNaN(x)&&!isNaN(y))P.push({x,y});
+ }
+ if(P.length<4){o.className='out';o.innerHTML='<div class="warn">Se requieren al menos 4 pares de datos válidos.</div>';return;}
+ const catNote=cx.catMap?' (categorías codificadas: '+cx.catMap.map((c,i)=>(i+1)+'='+c).join(', ')+')':'';
+ o.className='out';
+ o.innerHTML='<div class="cv"><canvas id="c-xy"></canvas></div>'+I('Muestra original ('+f(P.length,0)+' pares): cada punto representa un inmueble con su variable explicativa <b>'+nx+' (X)</b>'+catNote+' en el eje horizontal y la variable explicada <b>'+ny+' (Y)</b> en el eje vertical.');
+ if(xyChart){xyChart.destroy();xyChart=null;}
+ xyChart=new Chart($('c-xy'),{type:'scatter',data:{datasets:[{label:'Muestra original ('+ny+' vs. '+nx+')',data:P,backgroundColor:'rgba(30,58,138,.7)',pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{position:'bottom'}},scales:{x:{title:{display:true,text:nx+' (X, variable explicativa)'},ticks:{callback:v=>cx.catMap&&cx.catMap[v-1]?cx.catMap[v-1]:f(v)}},y:{title:{display:true,text:ny+' (Y, variable explicada)'},ticks:{callback:v=>cy.catMap&&cy.catMap[v-1]?cy.catMap[v-1]:f(v)}}}}});
+}
+
+function renderSanitizedXY(meth,k){
+ const o=$('o-xy-san');if(!o||!D||D.heads.length<2)return;
+ const jx=$('xsel-san')?+$('xsel-san').value:+$('xsel').value;
+ const jy=$('ysel-san')?+$('ysel-san').value:+$('ysel').value;
+ const nx=D.heads[jx],ny=D.heads[jy];
+ if(jx===jy){
+  o.innerHTML='<div class="warn">Seleccione una variable explicativa (X) distinta de la variable explicada (Y).</div>';
+  return;
+ }
+ const cx=parseColVal(D.cols[jx]),cy=parseColVal(D.cols[jy]);
+ const P=[];
+ for(let i=0;i<D.cols[jx].length;i++){
+  const x=cx.vals[i],y=cy.vals[i];
+  if(!isNaN(x)&&!isNaN(y))P.push({x,y});
+ }
+ if(P.length<4)return;
+ const kk=k>0?k:2,lim=limits(P.map(p=>p.y),meth,kk);
+ const keep=P.filter(p=>p.y>=lim[0]&&p.y<=lim[1]),rem=P.filter(p=>p.y<lim[0]||p.y>lim[1]);
+ const catNote=cx.catMap?' (categorías codificadas: '+cx.catMap.map((c,i)=>(i+1)+'='+c).join(', ')+')':'';
+ o.innerHTML='<div class="cv"><canvas id="c-xy-san"></canvas></div>'+I('Muestra saneada ('+ny+' vs. '+nx+catNote+'): <b>'+f(keep.length,0)+'</b> pares conservados'+(rem.length?' y <b>'+f(rem.length,0)+'</b> pares excluidos con '+ny+' fuera de ['+f(lim[0])+'; '+f(lim[1])+'] (marcados con ×).':'; ningún par fue excluido.'));
+ if(xySanChart){xySanChart.destroy();xySanChart=null;}
+ const ds=[{label:'Datos de la muestra saneada',data:keep,backgroundColor:'rgba(13,148,136,.8)',pointRadius:4}];
  if(rem.length)ds.push({label:'Datos excluidos por el saneamiento',data:rem,borderColor:'#d97706',backgroundColor:'#d97706',pointStyle:'crossRot',pointRadius:6});
- xyChart=new Chart($('c-xy'),{type:'scatter',data:{datasets:ds},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{position:'bottom'}},scales:{x:{title:{display:true,text:nx+' (X)'},ticks:{callback:v=>f(v)}},y:{title:{display:true,text:ny+' (Y)'},ticks:{callback:v=>f(v)}}}}});}
-$('xyb').onclick=xyRun;
+ xySanChart=new Chart($('c-xy-san'),{type:'scatter',data:{datasets:ds},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{position:'bottom'}},scales:{x:{title:{display:true,text:nx+' (X, variable explicativa)'},ticks:{callback:v=>cx.catMap&&cx.catMap[v-1]?cx.catMap[v-1]:f(v)}},y:{title:{display:true,text:ny+' (Y, variable explicada)'},ticks:{callback:v=>cy.catMap&&cy.catMap[v-1]?cy.catMap[v-1]:f(v)}}}}});
+}
+$('xyb').onclick=xyRunOrig;
+$('xsel').onchange=xyRunOrig;
+$('ysel').onchange=xyRunOrig;
 
 /* ---------- Impresión por sección y total ---------- */
 function printSec(id){const ok=id==='datos'?D:cur;if(!ok){alert(id==='datos'?'Cargue primero una base de datos.':'Analice primero una variable.');return;}
